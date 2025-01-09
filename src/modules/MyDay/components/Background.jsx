@@ -11,7 +11,7 @@ const Background = ({children}) => {
     return (
         <Row className="background-wrapper" gutter={0}>
           {/* Gradient Section */}
-          <Col span={24} className="gradient-section" style={{height : screens.lg ? "38%" : "100%"}}>
+          <Col span={24} className="gradient-section" style={{height : screens.lg ? "38vh" : "100%"}}>
             {children}
           </Col>
         </Row>
