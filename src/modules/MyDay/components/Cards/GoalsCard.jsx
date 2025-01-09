@@ -1,32 +1,65 @@
 // GoalsCard.jsx
 import React from "react";
-import { Card, Progress } from "antd";
+import { Card, Flex, Progress, Row } from "antd";
+import {
+  RocketFilled,
+  WarningFilled,
+  MinusCircleFilled,
+} from "@ant-design/icons";
+import Paragraph from "antd/es/typography/Paragraph";
 
-const goals = [
-    { key: "1", name: "Capacity increasing", progress: 78, status: "green" },
-    { key: "2", name: "Quality Control Enhancing", progress: 54, status: "green" },
-    { key: "3", name: "Distribution Network Expanding", progress: 46, status: "yellow" },
-  ];
 
-const GoalsCard = () => (
-  <Card style={{ fontSize: "1rem" }} className="myday-card">
-    <div>
-      <strong style={{ fontSize: "1.25rem", margin: "1rem 0rem" }}>
-        Goals Progress
-      </strong>
-    </div>
-    {goals.map((goal) => (
-      <div key={goal.key}>
-        <p style={{ margin: "0rem" }}>{goal.name}</p>
-        <Progress
-          percent={goal.progress}
-          status={goal.status}
-          strokeColor={goal.status}
-          size="small"
-        />
-      </div>
-    ))}
-  </Card>
-);
+
+const GoalsCard = ({ cardData }) => {
+  console.log(cardData);
+  const getGoalIcon = (goal) => {
+    if (goal?.goal_status === "On track")
+      return <RocketFilled style={{ color: "#0B9060" }} />;
+    else if (goal?.goal_status === "At risk")
+      return <WarningFilled style={{ color: "#FFA726" }} />;
+    else if (
+      goal?.goal_status === "Failed" ||
+      goal?.goal_status === "Failing"
+    ) {
+      return <MinusCircleFilled style={{ color: "#FF4D4F" }} />;
+    } else {
+      return null;
+    }
+  };
+
+  return (
+    <Card style={{ fontSize: "1rem" }} className="myday-card">
+      <Row style={{}}>
+        <Paragraph className="f-bricolage fw-600" style={{ fontSize: "1.25rem" ,margin:"0"}}>
+          Goals Progress
+        </Paragraph>
+      </Row>
+      <Flex justify="space-between" style={{margin:"1rem 0 1rem 0",width:"100%"}} vertical >
+      {cardData.map((goal) => (
+        <Row key={goal.id}>
+          <Paragraph style={{ margin: "0rem" ,fontSize:"0.875rem"}}>
+            {getGoalIcon(goal)}{" "}
+            {goal.name}
+          </Paragraph>
+          <Progress
+            percent={goal.goal_completed_percent}
+            // status={goal.status}
+            strokeColor={
+              goal?.status === "Inactive"
+                ? "#DDDEE4"
+                : goal?.goal_status === "On track"
+                ? "#0B9060"
+                : goal?.goal_status === "At risk"
+                ? "#FAAD14"
+                : "#FF4D4F"
+            }
+            size="small"
+          />
+        </Row>
+      ))}
+      </Flex>
+    </Card>
+  );
+};
 
 export default GoalsCard;

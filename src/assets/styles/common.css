@@ -34,3 +34,16 @@
 .myday-card{
   aspect-ratio: 187 / 169;
 }
+
+/* .myday-card .ant-card-body{
+  height: 100%;
+} */
+
+.scrollbar-hidden::-webkit-scrollbar {
+  display: none;
+}
+
+.scrollbar-hidden {
+-ms-overflow-style: none;  
+scrollbar-width: none;  
+}

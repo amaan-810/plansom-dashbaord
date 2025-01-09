@@ -13,6 +13,8 @@ const AppLayout = ({ children }) => {
   const toggleSidebar = () => setSidebarVisible(!sidebarVisible);
   const closeSidebar = () => setSidebarVisible(false);
 
+
+
   return (
     <Layout
       style={{
@@ -21,7 +23,7 @@ const AppLayout = ({ children }) => {
         position: "fixed",
       }}
     >
-      <Row style={{ border: "1px solid green", width: "100%" }}>
+      <Row style={{  width: "100%" }}>
         <Col
           xs={sidebarVisible ? 24 : 0}
           sm={8}
@@ -52,7 +54,7 @@ const AppLayout = ({ children }) => {
           md={16}
           lg={19}
           xl={20}
-          style={{overflow:"scroll",height:"100vh"}}
+          style={{overflow:"auto",height:"100vh"}}
 
         >
           <Layout
