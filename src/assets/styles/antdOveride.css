@@ -1,0 +1,8 @@
+.ant-menu-item-selected {
+    background-color: #E8EBF7 !important; /* Your desired background color */
+    color: #1D3BAF !important; /* Optional: Change text color */
+  }
+  
+  .ant-menu-item:hover {
+    background-color: #E8EBF7 !important; /* Optional: Background on hover */
+  }

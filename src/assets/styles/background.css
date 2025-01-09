@@ -1,0 +1,14 @@
+
+/* Background.css */
+.background-wrapper {
+  height: 100%; /* Full viewport height */
+  width: 100%;
+ 
+}
+.gradient-section { /* 40% of the viewport height */
+  background-image: linear-gradient(95.58deg, #E2DDFE -1.33%, #E8EBF7 28.97%, #E8EBF7 73.81%, #D9D5F4 93.63%); /* Gradient background */ /* Ensures text over gradient is visible */
+  z-index: 1;
+  background-size: cover;
+
+}
+

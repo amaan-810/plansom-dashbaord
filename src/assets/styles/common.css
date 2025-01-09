@@ -1,0 +1,36 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&display=swap");
+@import url('https://fonts.cdnfonts.com/css/sf-pro-display');
+
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Inter", serif;
+    font-optical-sizing: auto;
+  
+  }
+  
+  body {
+    width: 100vw;
+    height: 100vh;
+    font-weight: 400;
+    font-style: normal;
+  }
+  
+
+.heading
+{
+    font-family: "Lato", sans-serif;
+}
+
+.ptb-1{
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
+
+.myday-card{
+  aspect-ratio: 187 / 169;
+}
