@@ -1,8 +1,22 @@
 .ant-menu-item-selected {
-    background-color: #E8EBF7 !important; /* Your desired background color */
+    background-color: #E8EBF7 ; /* Your desired background color */
     color: #1D3BAF !important; /* Optional: Change text color */
   }
   
   .ant-menu-item:hover {
-    background-color: #E8EBF7 !important; /* Optional: Background on hover */
+    background-color: #E8EBF7 ; /* Optional: Background on hover */
   }
+
+  /* .ant-carousel .slick-prev,
+  .ant-carousel .slick-next,
+  .ant-carousel .slick-prev:hover,
+  .ant-carousel .slick-next:hover {
+    font-size: inherit;
+    color: currentColor;
+    opacity: 100%;
+  }
+  
+
+  .ant-carousel .slick-disabled {
+    opacity: 100 !important;
+  } */

@@ -9,6 +9,7 @@ import { Row, Col, Flex } from "antd";
 import SearchBar from "../components/Search/SearchBar";
 import MyDayAvatar from "../components/Search/MyDayAvatar";
 import MyDayCards from "../components/MyDayCards";
+import MyDayTable from "../components/Table/MyDayTable";
 
 const MyDay = () => {
   const screens = useBreakpoint();
@@ -42,7 +43,15 @@ const MyDay = () => {
 
           <MyDayCards />
         </Content>
+        <Row justify="center">
+        {screens.lg && <Col span={23}>
+        <MyDayTable/>
+        </Col>
+        }
+          
+        </Row>
         </Background>
+        
       </Content>
     </AppLayout>
   );

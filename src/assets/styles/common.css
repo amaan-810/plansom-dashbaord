@@ -47,3 +47,8 @@
 -ms-overflow-style: none;  
 scrollbar-width: none;  
 }
+
+
+.slick-prev{
+  color: black;
+}

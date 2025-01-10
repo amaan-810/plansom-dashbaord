@@ -1,0 +1,92 @@
+/* Card Container */
+.slider-card {
+  position: relative;
+  width: 100%;
+  /* max-width: 25rem;  */
+  margin: 0 auto;
+  background: white;
+  padding: 1rem;
+  overflow: hidden;
+  text-align: center;
+}
+
+/* Slider Wrapper */
+.slider-wrapper {
+  display: flex;
+  overflow: hidden;
+  width: 100%;
+}
+
+/* Slider Track */
+.slider-track {
+  display: flex;
+  transition: transform 0.5s ease-in-out;
+}
+
+/* Individual Slide */
+.slider-slide {
+  flex: 0 0 100%;
+  flex-shrink: 0;
+  box-sizing: border-box;
+}
+
+/* Card Content */
+.card-content {
+  overflow: hidden;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+ 
+}
+
+.slide-image {
+  width: 5rem; 
+  height: 5rem; 
+  border-radius: 50%;
+  margin-bottom: 0.625rem; /* 10px */
+}
+
+.slide-title {
+  color: #000;
+  font-weight: 600;
+  font-size: 1rem;
+  /* padding: 0 1rem 0 1rem; */
+  margin: 0;
+  overflow: hidden;
+  word-wrap: break-word;
+}
+
+/* Navigation Buttons */
+.slider-button {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  border: none;
+  font-size: 2rem;
+  color: white;
+  width: 2.5rem; 
+  height: 2.5rem; 
+  cursor: pointer;
+  z-index: 10;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+.slider-button.prev {
+  left: 0.5rem; /* 8px */
+}
+
+.slider-button.next {
+  right: 0.5rem; /* 8px */
+}
+
+/* Disable Button Hover Effect */
+.slider-button:focus {
+  outline: none;
+}
+
+/* Hide Buttons if Disabled */
+.slider-button.hidden {
+  visibility: hidden;
+}

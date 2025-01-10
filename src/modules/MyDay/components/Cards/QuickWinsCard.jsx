@@ -1,8 +1,11 @@
 // QuickWinsCard.jsx
 import React from "react";
-import { Card, Button, Row, Carousel, Flex, Space } from "antd";
-import { BulbOutlined, FireFilled } from "@ant-design/icons";
+import { Card, Button, Row, Col, Carousel, Flex, Space } from "antd";
+import { BulbOutlined, FireFilled,RightOutlined,LeftOutlined } from "@ant-design/icons";
 import Paragraph from "antd/es/typography/Paragraph";
+import "../../../../assets/styles/antdOveride.css"
+import left from "../../../../assets/images/leftarrow.svg"
+import CustomSlider from "../CustomSlider";
 
 const QuickWinsCard = ({ cardData }) => {
   console.log(cardData.quick_wins_data);
@@ -30,41 +33,50 @@ const QuickWinsCard = ({ cardData }) => {
           {cardData?.streak_count}d Streak
         </Paragraph>
       </Row>
-      <div>
+      {/* <div style={{backgroundColor:"white"}}>
         <p>Update Social Media Profile</p>
-        <Carousel arrows infinite={false} dots={false} style={{ height: "8rem" }}>
+        <Carousel arrows infinite={false} dots={false} style={{ height: "8rem" }}  
+        prevArrow={<img src={left} alt="" />}
+        nextArrow={<img src={left} alt="" />}
+        >
 
           {tasks.map((item) => (
             <div key={item.id}>
-              <h3
+              <div
                 style={{
-                  height: "160px",
+                  height: "8rem",
                   lineHeight: "160px",
                   textAlign: "center",
-                  background: "#364d79",
-                  color: "#fff",
                 }}
               >
                 {item.task.name}
-              </h3>
+              </div>
             </div>
           ))}
         </Carousel>
-      </div>
+      </div> */}
+      <Row>
+          <CustomSlider slides={tasks}/>
+      </Row>
 
-      <Row align="center" justify="space-between">
+      <Row align="center">
+        <Col span={19}>
         <Button
           type="default"
           style={{
             backgroundColor: "#3100A6",
+            width:"100%",
             color: "white",
             borderRadius: "1.5rem",
             fontWeight: "bold",
             padding: "1rem 2rem 1rem 2rem",
           }}
         >
+          
           Complete Task
         </Button>
+        </Col>
+        <Col>
         <Button
           type="primary"
           shape="circle"
@@ -77,6 +89,7 @@ const QuickWinsCard = ({ cardData }) => {
           }}
           icon={<BulbOutlined />}
         />
+        </Col>
       </Row>
     </Card>
   );
