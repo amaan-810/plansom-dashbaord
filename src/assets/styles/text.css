@@ -20,11 +20,11 @@
   html {
     font-size: 24px;
   }
-} 
+}  */
 
 
 @media (min-width: 770px) and (max-width: 1024px) {
   html {
-    font-size: 12px;
+    font-size: 14px;
   }
-} */
+}

@@ -32,6 +32,7 @@
 }
 
 .myday-card{
+  z-index: 2;
   aspect-ratio: 187 / 169;
 }
 

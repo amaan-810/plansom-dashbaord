@@ -12,10 +12,21 @@ import {
   Space,
   Card,
   Divider,
+  Flex,
 } from "antd";
-import { PlusOutlined } from "@ant-design/icons";
-import jsonData from "../../../../../response/table.json"; // Assuming the JSON file is saved as table.json
+import {
+  ArrowDownOutlined,
+  DownOutlined,
+  EllipsisOutlined,
+  FilterOutlined,
+  FlagFilled,
+  PlusOutlined,
+} from "@ant-design/icons";
+import jsonData from "../../../../../response/table.json";
 import "../../styles/tableCard.css";
+import Text from "antd/es/typography/Text";
+
+import rightArrow from "../../../../assets/images/rightArrow.svg";
 const MyDayTable = () => {
   // Define columns
   const formatEffort = (effort) => {
@@ -24,16 +35,13 @@ const MyDayTable = () => {
     return `${hours}h ${minutes}m`;
   };
 
-  // Define menu for the Outcome dropdown
-  const menu = (
-    <Menu
-      items={[
-        { key: "in-progress", label: "In progress" },
-        { key: "completed", label: "Completed" },
-        { key: "not-started", label: "Not started" },
-      ]}
-    />
-  );
+
+
+  const items = [
+    { key: "in-progress", label: "In progress" },
+    { key: "completed", label: "Completed" },
+    { key: "not-started", label: "Not started" },
+  ];
 
   // Define columns
   const columns = [
@@ -44,12 +52,44 @@ const MyDayTable = () => {
       key: "goal",
       render: (_, record) => (
         <>
-          <div>{record.goal.name}</div>
-          <Progress percent={record.goal.completedPercent} size="small" />
+          <div style={{ color: "#565C76" }}>{record.goal.name}</div>
+          <Progress
+            percent={record.goal.completedPercent}
+            size="small"
+            showInfo={false}
+            strokeColor={
+              record?.goal.goalStatus === "Inactive"
+                ? "#DDDEE4"
+                : record?.goal.goalStatus === "On track"
+                ? "#0B9060"
+                : record?.goal.goalStatus === "At risk"
+                ? "#FAAD14"
+                : "#FF4D4F"
+            }
+          />
         </>
       ),
     },
-    { title: "Who", dataIndex: "who", key: "who" },
+    {
+      title: "Who",
+      dataIndex: "who",
+      key: "who",
+      render: (_, record) => {
+        const fullName = `${record?.who?.LastName.charAt(0).toUpperCase()}. ${
+          record?.who?.firstName
+        }`;
+        const truncatedName =
+          record?.who?.firstName?.length > 8
+            ? `${record?.who?.firstName.slice(0, 8)}...`
+            : record?.who?.firstName;
+        return (
+          <Text>
+            {record?.who?.LastName.charAt(0).toUpperCase() + ". "}
+            {truncatedName}
+          </Text>
+        );
+      },
+    },
     {
       title: "Active",
       dataIndex: "active",
@@ -61,12 +101,26 @@ const MyDayTable = () => {
       dataIndex: "impact",
       key: "impact",
       render: (impact) => (
-        <Badge
-          color={
-            impact === "High" ? "red" : impact === "Medium" ? "orange" : "green"
-          }
-          text={impact}
-        />
+        // <Badge
+        //   color={
+        //     impact === "High" ? "red" : impact === "Medium" ? "orange" : "green"
+        //   }
+        //   text={impact}
+        // />
+        <Text>
+          <FlagFilled
+            style={{
+              color:
+                impact === "High"
+                  ? "#FF4D4F"
+                  : impact === "Medium"
+                  ? "#FAAD14"
+                  : "#0B9060",
+              marginRight: "0.5rem",
+            }}
+          />
+          {impact}
+        </Text>
       ),
     },
     {
@@ -82,22 +136,39 @@ const MyDayTable = () => {
       dataIndex: "outcome",
       key: "outcome",
       render: (outcome) => (
-        <Dropdown overlay={menu} trigger={["click"]}>
-          <a onClick={(e) => e.preventDefault()}>{outcome}</a>
-        </Dropdown>
+        <Flex>
+          <Dropdown Menu={items} trigger={["click"]}>
+            <Button
+              icon={<DownOutlined />}
+              iconPosition="end"
+              shape="round"
+              onClick={(e) => e.preventDefault()}
+            >
+              {outcome}
+            </Button>
+          </Dropdown>
+          <Button
+            icon={<EllipsisOutlined />}
+            iconPosition="start"
+            type="text"
+          ></Button>
+        </Flex>
       ),
     },
   ];
 
-  // Extract data source from JSON
   const dataSource = jsonData.data.task_list.map((task) => ({
     key: task.id, // Unique key
     task: task.name,
     goal: {
       name: task.goal?.name,
       completedPercent: task.goal?.goal_completed_percent || 0,
+      goalStatus: task.goal?.goal_status,
     },
-    who: task.goal?.goal_owner?.first_name,
+    who: {
+      firstName: task.goal?.goal_owner?.first_name,
+      LastName: task.goal?.goal_owner?.last_name,
+    },
     active: task.status,
     impact: task.task_impact,
     effort: task.task_effort,
@@ -109,25 +180,33 @@ const MyDayTable = () => {
   return (
     <Card
       style={{
-        // margin: "20px",
-        //  padding: "20px"
         borderRadius: "1rem",
+        marginBottom: "1rem",
+        overflow: "scroll",
       }}
       className="myday-tb-card"
     >
       {/* Top Header Section */}
-      <Row
-        justify="space-between"
-        align="middle"
-        style={{ margin: "2rem" }}
-      >
+      <Row justify="space-between" align="middle" style={{ margin: "2rem" }}>
         <Col>
-          <h2>Scheduled Tasks for Today</h2>
+          <Text className="f-bricolage fw-600 " style={{ fontSize: "1.5rem" }}>
+            Scheduled Tasks for Today
+          </Text>
         </Col>
         <Col>
           <Space>
-            <Button>Filter</Button>
-            <Button type="primary">View All</Button>
+            <Button
+              icon={<FilterOutlined />}
+              iconPosition="start"
+              shape="round"
+              size="large"
+              className="fw-600"
+            >
+              Filter
+            </Button>
+            <Button size="large" shape="round" className="fw-600">
+              View All <img src={rightArrow} alt="" />
+            </Button>
           </Space>
         </Col>
       </Row>

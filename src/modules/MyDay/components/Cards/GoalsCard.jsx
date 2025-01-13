@@ -11,7 +11,6 @@ import Paragraph from "antd/es/typography/Paragraph";
 
 
 const GoalsCard = ({ cardData }) => {
-  console.log(cardData);
   const getGoalIcon = (goal) => {
     if (goal?.goal_status === "On track")
       return <RocketFilled style={{ color: "#0B9060" }} />;
@@ -28,13 +27,13 @@ const GoalsCard = ({ cardData }) => {
   };
 
   return (
-    <Card style={{ fontSize: "1rem" }} className="myday-card">
+    <Card style={{ fontSize: "1rem" ,}} className="myday-card">
       <Row style={{}}>
         <Paragraph className="f-bricolage fw-600" style={{ fontSize: "1.25rem" ,margin:"0"}}>
           Goals Progress
         </Paragraph>
       </Row>
-      <Flex justify="space-between" style={{margin:"1rem 0 1rem 0",width:"100%"}} vertical >
+      <Flex justify="space-between" style={{margin:"1rem 0 1rem 0",width:"100%",}} vertical >
       {cardData.map((goal) => (
         <Row key={goal.id}>
           <Paragraph style={{ margin: "0rem" ,fontSize:"0.875rem"}}>

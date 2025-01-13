@@ -10,14 +10,18 @@ import SearchBar from "../components/Search/SearchBar";
 import MyDayAvatar from "../components/Search/MyDayAvatar";
 import MyDayCards from "../components/MyDayCards";
 import MyDayTable from "../components/Table/MyDayTable";
+import ScheduledTasksCard from "../components/ScheduledTasksCard";
+
 
 const MyDay = () => {
   const screens = useBreakpoint();
   return (
     <AppLayout>
-      <Content style={{position:"relative"}}>
+      <Content style={{
+        // position:"relative"
+        }}>
         <Background>
-        <Content style={{ padding: "1rem" }}>
+        <Content style={{ padding: "1rem" ,zIndex:"50"}}>
           <Row justify={screens.md ? "space-between" : "center"}>
             <Col lg={18} md={22} sm={24}>
               <SearchBar />
@@ -43,14 +47,19 @@ const MyDay = () => {
 
           <MyDayCards />
         </Content>
+        
+        </Background>
+
         <Row justify="center">
-        {screens.lg && <Col span={23}>
+        {screens.lg ? <Col span={23}>
         <MyDayTable/>
+        </Col> :
+        <Col span={24} style={{padding: screens.md ? "2rem":"1rem"}}>
+              <ScheduledTasksCard/>
         </Col>
         }
           
         </Row>
-        </Background>
         
       </Content>
     </AppLayout>

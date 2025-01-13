@@ -1,3 +1,14 @@
 .myday-tb-card .ant-card-body{
     padding: 0;
 }
+
+.myday-tb-card .ant-table-wrapper .ant-table-thead >tr>th{
+    background-color: white;
+    font-weight: 600;
+}
+
+.ant-switch-checked {
+    background-color: #1D3BAF !important; /* Checked state color */
+  }
+
+

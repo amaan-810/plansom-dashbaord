@@ -1,0 +1,14 @@
+/* In your CSS file or inline styles */
+.card-container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%; /* Ensures the card fills the column */
+  }
+  
+  .card-content {
+    flex: 1; /* Ensures all cards stretch equally */
+    display: flex;
+    flex-direction: column;
+  }
+  

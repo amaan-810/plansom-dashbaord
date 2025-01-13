@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { Row, Col, Layout } from "antd";
 import Sider from "antd/es/layout/Sider";
@@ -12,6 +12,7 @@ const AppLayout = ({ children }) => {
   const [sidebarVisible, setSidebarVisible] = useState(false);
   const toggleSidebar = () => setSidebarVisible(!sidebarVisible);
   const closeSidebar = () => setSidebarVisible(false);
+
 
 
 
@@ -38,6 +39,7 @@ const AppLayout = ({ children }) => {
             width={"100%"}
             style={{
               height: "100%",
+              display: !screens.md && !sidebarVisible && "none" ,
             }}
           >
             <Sidebar
