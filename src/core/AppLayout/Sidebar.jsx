@@ -13,7 +13,7 @@ import {
 } from "@ant-design/icons";
 import useBreakpoint from "antd/lib/grid/hooks/useBreakpoint";
 import logo from "../../assets/images/logo.svg";
-import "../../assets/styles/antdOveride.css";
+import "../../assets/styles/antdmenu.css";
 
 const items = [
   {
@@ -115,7 +115,7 @@ const Sidebar = ({ closeSidebar }) => {
         <Menu
           mode="inline"
           style={{
-            fontSize: `1rem`,
+            fontSize: !screens.md ? "1.125rem" : "1rem",
             border: "none",
           }}
           items={items} // Use `items` prop

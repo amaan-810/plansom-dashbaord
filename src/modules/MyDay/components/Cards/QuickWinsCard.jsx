@@ -8,7 +8,6 @@ import {
   
 } from "@ant-design/icons";
 import Paragraph from "antd/es/typography/Paragraph";
-import "../../../../assets/styles/antdOveride.css";
 import CustomSlider from "../CustomSlider";
 
 const QuickWinsCard = ({ cardData }) => {
