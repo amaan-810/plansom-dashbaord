@@ -1,9 +1,11 @@
 import React from "react";
-import { Card, Avatar, Button, Row, Col, Flex } from "antd";
+import PropTypes from "prop-types";
+import { Card, Avatar, Button, Flex } from "antd";
 import Paragraph from "antd/es/typography/Paragraph";
-import { LeftOutlined, RightOutlined, UserOutlined } from "@ant-design/icons";
+import {  UserOutlined } from "@ant-design/icons";
 import stars from "../../../../assets/images/stars.svg";
 import ai_image from "../../../../assets/images/ai_image.jpg";
+
 
 const AIInsightCard = ({ cardData }) => {
   return (
@@ -104,4 +106,10 @@ const AIInsightCard = ({ cardData }) => {
   );
 };
 
+AIInsightCard.propTypes={
+  cardData: PropTypes.string,
+}
+
 export default AIInsightCard;
+
+

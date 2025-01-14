@@ -1,38 +1,14 @@
 import React from "react";
-import {
-  Table,
-  Progress,
-  Switch,
-  Badge,
-  Dropdown,
-  Menu,
-  Button,
-  Row,
-  Col,
-  Space,
-  Card,
-  Divider,
-  Flex,
-} from "antd";
-import {
-  EllipsisOutlined,
-  FilterOutlined,
-  FlagFilled,
-  PlusOutlined,
-  RightOutlined,
-} from "@ant-design/icons";
+import { Button, Row, Col, Card, Divider, Flex } from "antd";
+import { FilterOutlined, PlusOutlined, RightOutlined } from "@ant-design/icons";
 import jsonData from "../../../../response/table.json";
 import "../styles/tableCard.css";
 
 import Text from "antd/es/typography/Text";
 
-
 import STCard from "./Cards/STCard";
 
 const ScheduledTasksCard = () => {
-
-  
-
   return (
     <Card
       style={{
@@ -48,8 +24,13 @@ const ScheduledTasksCard = () => {
         style={{ margin: "2rem 2rem 0rem 2rem" }}
       >
         <Col>
-          <Flex  justify="center"align="center" >
-            <Text className="f-bricolage fw-600 " style={{ fontSize: "1.5rem",textAlign:"center" }}>Scheduled Tasks for Today</Text>
+          <Flex justify="center" align="center">
+            <Text
+              className="f-bricolage fw-600 "
+              style={{ fontSize: "1.5rem", textAlign: "center" }}
+            >
+              Scheduled Tasks for Today
+            </Text>
           </Flex>
         </Col>
       </Row>

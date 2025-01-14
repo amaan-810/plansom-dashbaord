@@ -3,9 +3,7 @@ import {
   Table,
   Progress,
   Switch,
-  Badge,
   Dropdown,
-  Menu,
   Button,
   Row,
   Col,
@@ -15,7 +13,6 @@ import {
   Flex,
 } from "antd";
 import {
-  ArrowDownOutlined,
   DownOutlined,
   EllipsisOutlined,
   FilterOutlined,
@@ -28,12 +25,36 @@ import Text from "antd/es/typography/Text";
 
 import rightArrow from "../../../../assets/images/rightArrow.svg";
 const MyDayTable = () => {
-  // Define columns
+ 
+
   const formatEffort = (effort) => {
     const hours = Math.floor(effort);
     const minutes = Math.round((effort - hours) * 60);
     return `${hours}h ${minutes}m`;
   };
+
+  const getStrokeColor = (status) => {
+    if (status === "Inactive") {
+      return "#DDDEE4";
+    } else if (status === "On track") {
+      return "#0B9060";
+    } else if (status === "At risk") {
+      return "#FAAD14";
+    } else {
+      return "#FF4D4F";
+    }
+  };
+
+  const getFlagColor = (impact) => {
+    if (impact === "High") {
+      return "#FF4D4F";
+    } else if (impact === "Medium") {
+      return "#FAAD14";
+    } else {
+      return "#0B9060"; 
+    }
+  };
+
 
 
 
@@ -58,13 +79,7 @@ const MyDayTable = () => {
             size="small"
             showInfo={false}
             strokeColor={
-              record?.goal.goalStatus === "Inactive"
-                ? "#DDDEE4"
-                : record?.goal.goalStatus === "On track"
-                ? "#0B9060"
-                : record?.goal.goalStatus === "At risk"
-                ? "#FAAD14"
-                : "#FF4D4F"
+             getStrokeColor(record?.goal.goalStatus)
             }
           />
         </>
@@ -75,9 +90,6 @@ const MyDayTable = () => {
       dataIndex: "who",
       key: "who",
       render: (_, record) => {
-        const fullName = `${record?.who?.LastName.charAt(0).toUpperCase()}. ${
-          record?.who?.firstName
-        }`;
         const truncatedName =
           record?.who?.firstName?.length > 8
             ? `${record?.who?.firstName.slice(0, 8)}...`
@@ -101,21 +113,10 @@ const MyDayTable = () => {
       dataIndex: "impact",
       key: "impact",
       render: (impact) => (
-        // <Badge
-        //   color={
-        //     impact === "High" ? "red" : impact === "Medium" ? "orange" : "green"
-        //   }
-        //   text={impact}
-        // />
         <Text>
           <FlagFilled
             style={{
-              color:
-                impact === "High"
-                  ? "#FF4D4F"
-                  : impact === "Medium"
-                  ? "#FAAD14"
-                  : "#0B9060",
+              color: getFlagColor(impact),
               marginRight: "0.5rem",
             }}
           />
@@ -137,7 +138,7 @@ const MyDayTable = () => {
       key: "outcome",
       render: (outcome) => (
         <Flex>
-          <Dropdown Menu={items} trigger={["click"]}>
+          <Dropdown menu={{items}} trigger={["click"]}>
             <Button
               icon={<DownOutlined />}
               iconPosition="end"
@@ -182,7 +183,7 @@ const MyDayTable = () => {
       style={{
         borderRadius: "1rem",
         marginBottom: "1rem",
-        overflow: "scroll",
+       
       }}
       className="myday-tb-card"
     >
@@ -216,7 +217,7 @@ const MyDayTable = () => {
           columns={columns}
           dataSource={dataSource}
           pagination={false}
-          style={{ width: "100%" }}
+          style={{ width: "100%", overflow: "auto", }}
         />
       </Row>
 

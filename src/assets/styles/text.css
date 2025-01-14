@@ -16,11 +16,11 @@
   font-weight: 200;
 }
 
-/* @media (min-width: 2000px) {
+@media (min-width: 2000px) {
   html {
     font-size: 24px;
   }
-}  */
+} 
 
 
 @media (min-width: 770px) and (max-width: 1024px) {

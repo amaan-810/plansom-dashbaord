@@ -1,16 +1,14 @@
 import React, { useState } from "react";
+import PropTypes from "prop-types";
 import "../styles/slider.css";
-import { Button, Flex, Row,Typography } from "antd";
+import { Button, Flex, Row, } from "antd";
 import leftArrow from '../../../assets/images/leftArrow.svg'
 import rightArrow from '../../../assets/images/rightArrow.svg'
-import Paragraph from "antd/es/typography/Paragraph";
 import quickwins from "../../../assets/images/quickwins.jpg"
-import useBreakpoint from "antd/lib/grid/hooks/useBreakpoint";
 
 const CustomSlider = ({ slides }) => {
-    const screens=useBreakpoint();
 
-    const {Paragraph,Text}=Typography
+    
     const [currentIndex, setCurrentIndex] = useState(0);
   
     const handleNext = () => {
@@ -56,7 +54,7 @@ const CustomSlider = ({ slides }) => {
             }}
           >
             {slides.map((slide, index) => (
-              <div className="slider-slide" key={index} style={{
+              <div className="slider-slide" key={slide.task.id} style={{
                 // width: "",
                 // // screens.lg && !screens.xl ? "3.5rem" : "",
                 // // height: screens.sm && "3rem",
@@ -75,5 +73,17 @@ const CustomSlider = ({ slides }) => {
       </Row>
     );
   };
+
+
+  CustomSlider.propTypes = {
+    slides: PropTypes.arrayOf(
+      PropTypes.shape({
+        task: PropTypes.shape({
+          name: PropTypes.string.isRequired, // Task name is required
+        }).isRequired,
+      })
+    ).isRequired, // The slides array is required
+  };
+  
   
   export default CustomSlider;

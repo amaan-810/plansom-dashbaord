@@ -4,7 +4,18 @@ import { SearchOutlined, PlusOutlined } from "@ant-design/icons";
 import useBreakpoint from "antd/lib/grid/hooks/useBreakpoint";
 
 const SearchBar = () => {
+
   const screens = useBreakpoint();
+
+  const getWidth = () => {
+    if (!screens.md) {
+      return `calc(100vw - 25vw)`;
+    } else if (!screens.lg) {
+      return "calc(100vw - 50vw)";
+    } else {
+      return `calc(100vw - 50vw)`;
+    }
+  };
 
   return (
     <Flex
@@ -21,11 +32,7 @@ const SearchBar = () => {
         prefix={<SearchOutlined />}
         style={{
           borderRadius: "1.5rem",
-          width: !screens.md
-            ? `calc(100vw - 25vw)`
-            : !screens.lg
-            ? "calc(100vw - 50vw)"
-            : `calc(100vw - 50vw)`,
+          width: getWidth(),
           height: "1.rem",
         }}
       />

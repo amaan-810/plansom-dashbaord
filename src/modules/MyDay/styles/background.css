@@ -1,8 +1,7 @@
 .background-wrapper {
   position: relative; 
   width: 100%;
-  /* background-color: aqua;  */
-
+}
 .gradient-section {
   position: absolute; 
   top: 0;

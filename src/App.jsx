@@ -1,5 +1,4 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Login from "./modules/Auth/pages/Login";
 import MyDay from "./modules/MyDay/pages";
 import "./assets/styles/common.css";
 import "./assets/styles/text.css";

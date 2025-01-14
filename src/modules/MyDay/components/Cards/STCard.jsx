@@ -1,25 +1,47 @@
 import React from "react";
+import PropTypes from "prop-types";
 import {
   Row,
-  Col,
   Divider,
   Button,
   Progress,
   Flex,
   Switch,
   Dropdown,
-  Menu,
 } from "antd";
 import Text from "antd/es/typography/Text";
 import {
   EllipsisOutlined,
   FlagFilled,
   DownOutlined,
-  DockerOutlined,
 } from "@ant-design/icons";
 import STFlex from "./STFlex";
 
 const STCard = ({ data }) => {
+
+  const getStrokeColor = (status) => {
+    if (status === "Inactive") {
+      return "#DDDEE4";
+    } else if (status === "On track") {
+      return "#0B9060";
+    } else if (status === "At risk") {
+      return "#FAAD14";
+    } else {
+      return "#FF4D4F";
+    }
+  };
+
+  const getFlagColor = (impact) => {
+    if (impact === "High") {
+      return "#FF4D4F";
+    } else if (impact === "Medium") {
+      return "#FAAD14";
+    } else {
+      return "#0B9060"; 
+    }
+  };
+
+
   const formatEffort = (effort) => {
     const hours = Math.floor(effort);
     const minutes = Math.round((effort - hours) * 60);
@@ -53,15 +75,7 @@ const STCard = ({ data }) => {
                   percent={task.goal?.goal_completed_percent}
                   size="small"
                   showInfo={false}
-                  strokeColor={
-                    task.goal?.goal_status === "Inactive"
-                      ? "#DDDEE4"
-                      : task.goal?.goal_status === "On track"
-                      ? "#0B9060"
-                      : task.goal?.goal_status === "At risk"
-                      ? "#FAAD14"
-                      : "#FF4D4F"
-                  }
+                  strokeColor={getStrokeColor(task?.goal?.goal_status)}
                 />
               </>
 
@@ -84,11 +98,7 @@ const STCard = ({ data }) => {
                   <FlagFilled
                     style={{
                       color:
-                        task.task_impact === "High"
-                          ? "#FF4D4F"
-                          : task.task_impact === "Medium"
-                          ? "#FAAD14"
-                          : "#0B9060",
+                      getFlagColor(task.task_impact),
                       marginRight: "0.5rem",
                     }}
                   />
@@ -113,10 +123,9 @@ const STCard = ({ data }) => {
                 <Text>{task.due_in}</Text>
               </Flex>
 
-              <Dropdown Menu={items} trigger={["click"]}>
+              <Dropdown menu={{items}}>
                 <Button
-                  //   icon={<DownOutlined />}
-                  //   iconPosition="end"
+                size="large"
                   shape="round"
                   type="default"
                   onClick={(e) => e.preventDefault()}
@@ -136,6 +145,30 @@ const STCard = ({ data }) => {
       })}
     </>
   );
+};
+
+STCard.propTypes = {
+  data: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+      name: PropTypes.string.isRequired,
+      goal: PropTypes.shape({
+        name: PropTypes.string,
+        goal_completed_percent: PropTypes.number,
+        goal_status: PropTypes.string,
+        goal_owner: PropTypes.shape({
+          first_name: PropTypes.string,
+          last_name: PropTypes.string,
+        }),
+      }),
+      status: PropTypes.string,
+      task_impact: PropTypes.string,
+      task_effort: PropTypes.number,
+      task_type: PropTypes.string,
+      due_in: PropTypes.string,
+      task_success: PropTypes.string,
+    })
+  ).isRequired,
 };
 
 export default STCard;

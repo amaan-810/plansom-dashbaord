@@ -3,7 +3,7 @@ import AppLayout from "../../../core/AppLayout";
 import Background from "../components/Background";
 import useBreakpoint from "antd/lib/grid/hooks/useBreakpoint";
 import { Content } from "antd/es/layout/layout";
-import Lorem from "../components/Lorem";
+
 import { Row, Col, Flex } from "antd";
 
 import SearchBar from "../components/Search/SearchBar";

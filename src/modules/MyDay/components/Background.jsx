@@ -1,5 +1,4 @@
 import React from "react";
-import { Row, Col, Flex } from "antd";
 import "../styles/background.css";
 import useBreakpoint from "antd/lib/grid/hooks/useBreakpoint";
 import PropTypes from "prop-types";

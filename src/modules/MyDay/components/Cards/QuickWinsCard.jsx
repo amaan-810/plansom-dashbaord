@@ -1,27 +1,22 @@
 // QuickWinsCard.jsx
 import React from "react";
-import { Card, Button, Row, Col, Carousel, Flex, Space } from "antd";
+import PropTypes from "prop-types";
+import { Card, Button, Row, Col, } from "antd";
 import {
   BulbOutlined,
   FireFilled,
-  RightOutlined,
-  LeftOutlined,
+  
 } from "@ant-design/icons";
 import Paragraph from "antd/es/typography/Paragraph";
 import "../../../../assets/styles/antdOveride.css";
-import left from "../../../../assets/images/leftarrow.svg";
 import CustomSlider from "../CustomSlider";
 
 const QuickWinsCard = ({ cardData }) => {
-  // const quick_wins_data=cardData?.quick_wins_data;
+  
 
-  const tasks = cardData.quick_wins_data;
+  const tasks = cardData?.quick_wins_data;
 
-  const contentStyle = {
-    margin: 0,
-    height: "10rem",
-    textAlign: "center",
-  };
+ 
   return (
     <Card className="myday-card">
       <Row justify="space-between" align="center">
@@ -41,7 +36,7 @@ const QuickWinsCard = ({ cardData }) => {
         <CustomSlider slides={tasks} />
       </Row>
 
-      <Row align="center">
+      <Row align="center" justify='space-around' style={{marginTop: "1rem"}}>
         <Col span={19}>
           <Button
             type="default"
@@ -57,7 +52,7 @@ const QuickWinsCard = ({ cardData }) => {
             Complete Task
           </Button>
         </Col>
-        <Col>
+        <Col span={2}>
           <Button
             type="primary"
             shape="circle"
@@ -74,6 +69,13 @@ const QuickWinsCard = ({ cardData }) => {
       </Row>
     </Card>
   );
+};
+
+QuickWinsCard.propTypes = {
+  cardData: PropTypes.shape({
+    quick_wins_data: PropTypes.arrayOf(PropTypes.object), // Assuming each task is an object
+    streak_count: PropTypes.number, // Assuming streak_count is a number
+  }).isRequired,
 };
 
 export default QuickWinsCard;

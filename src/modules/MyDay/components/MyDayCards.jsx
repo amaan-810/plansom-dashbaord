@@ -1,17 +1,15 @@
 import React from "react";
-import { Row, Col, Table } from "antd";
+import { Row, Col, } from "antd";
 import AIInsightCard from "./Cards/AIInsightCard";
 import GoalsCard from "./Cards/GoalsCard";
 import QuickWinsCard from "./Cards/QuickWinsCard";
 
 import data from "../../../../response/response2.json";
 import data2 from "../../../../response/response4.json";
-import useBreakpoint from "antd/lib/grid/hooks/useBreakpoint";
 import "../styles/Card.css"
 
 const MyDayCards = () => {
-  // console.log(data);
-  const screens = useBreakpoint();
+
 
   return (
     <Row

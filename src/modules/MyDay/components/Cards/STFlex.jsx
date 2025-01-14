@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { Flex, Divider } from "antd";
 
 const STFlex = ({ children }) => {
@@ -14,5 +15,9 @@ const STFlex = ({ children }) => {
     </>
   );
 };
+
+STFlex.propTypes={
+  children: PropTypes.node,
+}
 
 export default STFlex;
