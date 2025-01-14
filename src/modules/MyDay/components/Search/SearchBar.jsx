@@ -4,14 +4,13 @@ import { SearchOutlined, PlusOutlined } from "@ant-design/icons";
 import useBreakpoint from "antd/lib/grid/hooks/useBreakpoint";
 
 const SearchBar = () => {
-
   const screens = useBreakpoint();
 
   const getWidth = () => {
     if (!screens.md) {
       return `calc(100vw - 25vw)`;
     } else if (!screens.lg) {
-      return "calc(100vw - 50vw)";
+      return "calc(100vw - 65vw)";
     } else {
       return `calc(100vw - 50vw)`;
     }
@@ -28,24 +27,25 @@ const SearchBar = () => {
       }}
     >
       <Input
-        placeholder="Search for a..."
+        placeholder="  Search for a..."
         prefix={<SearchOutlined />}
+        size="large"
         style={{
           borderRadius: "1.5rem",
           width: getWidth(),
-          height: "1.rem",
         }}
       />
       <Button
         type="default"
         icon={<PlusOutlined />}
         iconPosition="start"
+        shape= {!screens.md ? "circle" : "round"}
+        size="large"
         style={{
           backgroundColor: "#1D3BAF",
           color: "white",
-          borderRadius: "1.5rem",
-          fontWeight: "600",
         }}
+        className="fw-600"
       >
         {!screens.md ? "" : "Add Item"}
       </Button>

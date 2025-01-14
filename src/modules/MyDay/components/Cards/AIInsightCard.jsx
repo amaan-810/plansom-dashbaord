@@ -2,25 +2,13 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Card, Avatar, Button, Flex } from "antd";
 import Paragraph from "antd/es/typography/Paragraph";
-import {  UserOutlined } from "@ant-design/icons";
+import { UserOutlined } from "@ant-design/icons";
 import stars from "../../../../assets/images/stars.svg";
 import ai_image from "../../../../assets/images/ai_image.jpg";
 
-
 const AIInsightCard = ({ cardData }) => {
   return (
-    <Card
-      style={{
-        backgroundColor: "#3100A6",
-        color: "white",
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "flex-start",
-        // overflow:"auto"
-       
-      }}
-      className="myday-card"
-    >
+    <Card className="myday-card ai-card">
       <Flex align="top" gutter={[8, 8]} style={{ flexGrow: 1 }} gap="middle">
         <Flex align="center">
           <Avatar
@@ -64,8 +52,7 @@ const AIInsightCard = ({ cardData }) => {
           margin: "1rem 0 1rem 0",
           color: "white",
           height: "8rem",
-          overflow: "auto"
-
+          overflow: "auto",
         }}
       >
         {/* Your <span style={{ color: "yellow" }}>time management</span> improved
@@ -84,7 +71,7 @@ const AIInsightCard = ({ cardData }) => {
           alignSelf: "flex-start", // Align button to the left
         }}
       >
-        {<img src={stars} alt=""/>}
+        {<img src={stars} alt="" />}
         Explore my stats
       </Button>
 
@@ -106,10 +93,8 @@ const AIInsightCard = ({ cardData }) => {
   );
 };
 
-AIInsightCard.propTypes={
+AIInsightCard.propTypes = {
   cardData: PropTypes.string,
-}
+};
 
 export default AIInsightCard;
-
-

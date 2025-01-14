@@ -17,7 +17,6 @@ const ScheduledTasksCard = () => {
       }}
       className="myday-tb-card"
     >
-      {/* Top Header Section */}
       <Row
         justify="center"
         align="middle"

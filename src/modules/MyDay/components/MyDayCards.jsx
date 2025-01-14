@@ -14,15 +14,13 @@ const MyDayCards = () => {
   return (
     <Row
       gutter={[16, 16]}
+      className="mydaycard-row"
       style={{
         padding: screen.md && "1rem",
-        margin: "0",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "stretch",
       }}
       justify="center"
       align="center"
+      
     >
       <Col xs={24} sm={24} md={22} lg={8} xl={8}>
         <AIInsightCard cardData={data.data.ai_message_data} />

@@ -1,0 +1,19 @@
+.mydaycard-row{
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: stretch;
+}
+
+.myday-card{
+    z-index: 2;
+    aspect-ratio: 187 / 169;
+}
+  
+.ai-card{
+    background-color: #3100A6;
+    color: white;
+    display: "flex";
+    flex-direction: "column";
+    justify-content: "flex-start";
+}
