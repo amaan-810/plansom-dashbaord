@@ -20,7 +20,7 @@ const MobileHeader = ({ toggleSidebar }) => (
       borderBottom: "1px solid #ddd",
     }}
   >
-    <Button icon={<MenuOutlined />} type="text" onClick={toggleSidebar} />
+
 
     <div
       style={{
@@ -28,15 +28,10 @@ const MobileHeader = ({ toggleSidebar }) => (
         display: "inline-block",
         height: "2rem",
         width: "8rem",
+        backgroundSize:"cover",
         backgroundRepeat: "no-repeat",
       }}
     ></div>
-
-    <Avatar
-      size={35}
-      icon={<UserOutlined />}
-      style={{ backgroundColor: "gray", cursor: "pointer" }}
-    />
   </Flex>
 );
 

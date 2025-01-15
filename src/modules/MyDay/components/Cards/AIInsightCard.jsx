@@ -62,12 +62,13 @@ const AIInsightCard = ({ cardData }) => {
 
       {/* Button at the bottom with no additional margin */}
       <Button
+      size="large"
         style={{
           backgroundColor: "white",
           color: "black",
           borderRadius: "1.5rem",
           fontWeight: "bold",
-          padding: "1.5rem",
+          // padding: "1.5rem",
           alignSelf: "flex-start", // Align button to the left
         }}
       >

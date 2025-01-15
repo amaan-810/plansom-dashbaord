@@ -66,14 +66,14 @@ const MyDayTable = () => {
 
   // Define columns
   const columns = [
-    { title: "Task", dataIndex: "task", key: "task" },
+    { title: "Task", dataIndex: "task", key: "task" , },
     {
       title: "Goal",
       dataIndex: "goal",
       key: "goal",
       render: (_, record) => (
         <>
-          <div style={{ color: "#565C76" }}>{record.goal.name}</div>
+          <div style={{ color: "#565C76", }}>{record.goal.name}</div>
           <Progress
             percent={record.goal.completedPercent}
             size="small"
@@ -89,6 +89,7 @@ const MyDayTable = () => {
       title: "Who",
       dataIndex: "who",
       key: "who",
+      
       render: (_, record) => {
         const truncatedName =
           record?.who?.firstName?.length > 8
@@ -107,6 +108,7 @@ const MyDayTable = () => {
       dataIndex: "active",
       key: "active",
       render: (_, record) => <Switch checked={record.active} />,
+      
     },
     {
       title: "Impact",
@@ -130,7 +132,7 @@ const MyDayTable = () => {
       key: "effort",
       render: (effort) => formatEffort(effort),
     },
-    { title: "Type", dataIndex: "type", key: "type" },
+    { title: "Type", dataIndex: "type", key: "type"  ,  },
     { title: "Due In", dataIndex: "dueIn", key: "dueIn" },
     {
       title: "Outcome",
@@ -217,6 +219,7 @@ const MyDayTable = () => {
           columns={columns}
           dataSource={dataSource}
           pagination={false}
+          // scroll={{ x: 'max-content' }}
           style={{ width: "100%", overflow: "auto", }}
         />
       </Row>

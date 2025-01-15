@@ -39,14 +39,14 @@ const QuickWinsCard = ({ cardData }) => {
         <Col span={19}>
           <Button
             type="default"
+            shape="round"
+            size="large"
             style={{
               backgroundColor: "#3100A6",
               width: "100%",
               color: "white",
-              borderRadius: "1.5rem",
-              fontWeight: "bold",
-              padding: "1rem 2rem 1rem 2rem",
             }}
+            className="fw-600"
           >
             Complete Task
           </Button>
@@ -55,14 +55,14 @@ const QuickWinsCard = ({ cardData }) => {
           <Button
             type="primary"
             shape="circle"
+            size="large"
             style={{
               backgroundColor: "white",
               color: "grey",
-              borderRadius: "50%",
-              fontWeight: "bold",
               padding: "0.75rem",
             }}
             icon={<BulbOutlined />}
+            className="fw-600"
           />
         </Col>
       </Row>
