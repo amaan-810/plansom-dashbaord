@@ -63,6 +63,7 @@ const Login = () => {
               <Form
                 form={form} // Connect form instance directly here
                 name="loginForm"
+                requiredMark={false}
                 layout="vertical"
                 onFinish={onFinish}
                 onFinishFailed={onFinishFailed}
