@@ -1,14 +1,12 @@
 import React, { Children } from "react";
 import PropTypes from "prop-types";
-import { Layout, Row, Col, Flex, Card } from "antd";
+import { Layout, Row, Col, Card } from "antd";
 import { Content } from "antd/es/layout/layout";
 import "../styles/layout.css";
 import loginBanner from "../../../assets/images/loginBanner.png";
-import useBreakpoint from "antd/lib/grid/hooks/useBreakpoint";
-import MobileLoginHeader from "./MobileLoginHeader";
+
 
 const LoginLayout = ({ children }) => {
-    const screens=useBreakpoint()
   return (
     <Layout
       className="gradient-background"
@@ -55,7 +53,7 @@ const LoginLayout = ({ children }) => {
   );
 };
 
-LoginLayout.prototype = {
+LoginLayout.propTypes = {
   children: PropTypes.node,
 };
 
