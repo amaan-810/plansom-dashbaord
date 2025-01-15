@@ -1,33 +1,34 @@
-import React from "react";
-import { Form, Input, Button, Checkbox, Typography, Row, Col ,Card} from "antd";
-import { Link } from "react-router-dom";
-import {
-  ArrowLeftOutlined,
-  EyeInvisibleOutlined,
-  EyeOutlined,
-} from "@ant-design/icons";
+import React, { useState } from "react";
+import { Form, Input, Button, Checkbox, Typography, Row, Col } from "antd";
+import { ArrowLeftOutlined, EyeInvisibleOutlined, EyeOutlined } from "@ant-design/icons";
 import LoginLayout from "../LoginLayout";
 import "../styles/login.css";
 import useBreakpoint from "antd/lib/grid/hooks/useBreakpoint";
-import loginBanner from '../../../assets/images/loginBanner.png'
-import { Header } from "antd/es/layout/layout";
 
-const { Title, Text } = Typography;
+const { Text } = Typography;
 
 const Login = () => {
   const screens = useBreakpoint();
+  const [form] = Form.useForm(); // Create the form instance
+  const [isButtonDisabled, setIsButtonDisabled] = useState(true); // Button disabled state
 
   const onFinish = (values) => {
-    console.log("Form Values:", values);
+    console.log("Form Submitted:", values);
   };
 
   const onFinishFailed = (errorInfo) => {
     console.error("Validation Errors:", errorInfo);
   };
 
+  const onFieldsChange = () => {
+    // Check for form errors dynamically
+    const errors = form.getFieldsError().some((field) => field.errors.length > 0);
+    const isTouched = form.isFieldsTouched(true);
+    setIsButtonDisabled(errors || !isTouched);
+  };
+
   return (
     <LoginLayout>
-     
       <Row
         justify="center"
         align="middle"
@@ -36,11 +37,9 @@ const Login = () => {
       >
         <Col xs={20} sm={20} md={16} lg={20} xl={20}>
           <Row className="login-card" gutter={[16, 16]} align="middle">
-            
             <Col span={24}>
               <Button
                 icon={<ArrowLeftOutlined />}
-                iconPosition="start"
                 type="text"
                 className="fw-600"
               >
@@ -62,12 +61,12 @@ const Login = () => {
 
             <Col span={24}>
               <Form
-                requiredMark={false}
-                layout="vertical"
+                form={form} // Connect form instance directly here
                 name="loginForm"
+                layout="vertical"
                 onFinish={onFinish}
                 onFinishFailed={onFinishFailed}
-                validateTrigger="onBlur"
+                onFieldsChange={onFieldsChange} // Listen for field changes
                 className="login-form"
               >
                 <Form.Item
@@ -77,6 +76,7 @@ const Login = () => {
                     { required: true, message: "Please enter your email!" },
                     { type: "email", message: "Please enter a valid email!" },
                   ]}
+                  validateTrigger={["onBlur", "onChange"]}
                 >
                   <Input
                     size="large"
@@ -88,9 +88,8 @@ const Login = () => {
                 <Form.Item
                   label="Password"
                   name="password"
-                  rules={[
-                    { required: true, message: "Please enter your password!" },
-                  ]}
+                  rules={[{ required: true, message: "Please enter your password!" }]}
+                  validateTrigger={["onBlur", "onChange"]}
                 >
                   <Input.Password
                     size="large"
@@ -102,43 +101,23 @@ const Login = () => {
                   />
                 </Form.Item>
 
-                <Form.Item className="login-options" align="middle">
-                  <Text className="forgot-password fw-600">
-                    Forgot Password?
-                  </Text>
-
-                  <Button type="text" className="reset-password fw-600">
-                    Reset Password
-                  </Button>
-                </Form.Item>
-
-                <Form.Item name="remember" valuePropName="checked">
-                  <Checkbox>Remember me</Checkbox>
+                <Form.Item>
+                  <Checkbox name="remember">Remember me</Checkbox>
                 </Form.Item>
 
                 <Form.Item>
                   <Button
-                    className="fw-600"
                     type="primary"
                     htmlType="submit"
                     block
                     shape="round"
                     size="large"
                     style={{ backgroundColor: "#1D3BAF", color: "#FFFFFF" }}
+                    disabled={isButtonDisabled} // Use dynamic state for disabling
                   >
                     Log In
                   </Button>
                 </Form.Item>
-
-                <Row className="login-options" align="middle">
-                  <Text className="forgot-password fw-600">
-                    Not registered yet?
-                  </Text>
-
-                  <Button type="text" className="reset-password fw-600">
-                    Sign Up
-                  </Button>
-                </Row>
               </Form>
             </Col>
           </Row>
