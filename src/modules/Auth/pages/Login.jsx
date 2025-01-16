@@ -1,7 +1,10 @@
-
 import React, { useState } from "react";
 import { Form, Input, Button, Checkbox, Typography, Row, Col } from "antd";
-import { ArrowLeftOutlined, EyeInvisibleOutlined, EyeOutlined } from "@ant-design/icons";
+import {
+  ArrowLeftOutlined,
+  EyeInvisibleOutlined,
+  EyeOutlined,
+} from "@ant-design/icons";
 import LoginLayout from "../LoginLayout";
 import "../styles/login.css";
 import useBreakpoint from "antd/lib/grid/hooks/useBreakpoint";
@@ -22,13 +25,14 @@ const Login = () => {
   };
 
   const onFieldsChange = () => {
-    // Check if any fields have errors
-    const hasErrors = form.getFieldsError().some((field) => field.errors.length > 0);
+    const hasErrors = form
+      .getFieldsError()
+      .some((field) => field.errors.length > 0);
 
-    // Check if all required fields are filled
-    const allFieldsFilled = form.getFieldsValue(["email", "password"]).email && form.getFieldsValue(["email", "password"]).password;
+    const allFieldsFilled =
+      form.getFieldsValue(["email", "password"]).email &&
+      form.getFieldsValue(["email", "password"]).password;
 
-    // Enable or disable the button based on validity
     setIsButtonDisabled(hasErrors || !allFieldsFilled);
   };
 
@@ -96,7 +100,9 @@ const Login = () => {
                 <Form.Item
                   label="Password"
                   name="password"
-                  rules={[{ required: true, message: "Please enter your password!" }]}
+                  rules={[
+                    { required: true, message: "Please enter your password!" },
+                  ]}
                   validateTrigger={["onBlur", "onChange"]}
                 >
                   <Input.Password
@@ -108,6 +114,15 @@ const Login = () => {
                     }
                   />
                 </Form.Item>
+
+                <Row align="middle">
+                  <Text className="forget-password fw-600">
+                    Forgot password?
+                  </Text>
+                  <Button type="text" className="reset-password fw-600">
+                    Reset Password
+                  </Button>
+                </Row>
 
                 <Form.Item
                   name="remember"
@@ -134,6 +149,14 @@ const Login = () => {
                     Log In
                   </Button>
                 </Form.Item>
+                <Row align="middle">
+                  <Text className="forget-password fw-600">
+                    Not registered yet?
+                  </Text>
+                  <Button type="text" className="reset-password fw-600">
+                    Sign Up
+                  </Button>
+                </Row>
               </Form>
             </Col>
           </Row>

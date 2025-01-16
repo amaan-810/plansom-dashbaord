@@ -1,14 +1,14 @@
 import React from "react";
 import { Button, Row, Col, Card, Divider, Flex } from "antd";
 import { FilterOutlined, PlusOutlined, RightOutlined } from "@ant-design/icons";
-import jsonData from "../../../../response/table.json";
-import "../styles/tableCard.css";
+import jsonData from "../../../../../response/table.json";
+import "../../styles/tableCard.css";
 
 import Text from "antd/es/typography/Text";
 
-import STCard from "./Cards/STCard";
+import STCard from "../Cards/STCard";
 
-const ScheduledTasksCard = () => {
+const ScheduledTasksCard = ({tableData}) => {
   return (
     <Card
       style={{
@@ -61,7 +61,7 @@ const ScheduledTasksCard = () => {
       </Row>
       <Divider style={{ margin: 0 }} />
 
-      <STCard data={jsonData?.data?.task_list} />
+      <STCard data={tableData?.data?.task_list} />
 
       <Divider style={{ margin: 0 }} />
       <Row style={{ margin: "2rem", textAlign: "center" }}>

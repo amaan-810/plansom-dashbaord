@@ -9,8 +9,7 @@ import { Row, Col, Flex } from "antd";
 import SearchBar from "../components/Search/SearchBar";
 import MyDayAvatar from "../components/Search/MyDayAvatar";
 import MyDayCards from "../components/MyDayCards";
-import MyDayTable from "../components/Table/MyDayTable";
-import ScheduledTasksCard from "../components/ScheduledTasksCard";
+import MyDayTable from "../components/MyDayTable";
 
 import "../styles/common.css";
 
@@ -44,16 +43,8 @@ const MyDay = () => {
           </Content>
         </Background>
 
-        <Row justify="center">
-          {screens.lg ? (
-            <Col span={23}>
-              <MyDayTable />
-            </Col>
-          ) : (
-            <Col span={24} style={{ padding: screens.md ? "2rem" : "1rem" }}>
-              <ScheduledTasksCard />
-            </Col>
-          )}
+        <Row style={{ padding: "1rem" }}>
+          <MyDayTable />
         </Row>
       </Content>
     </AppLayout>

@@ -1,15 +1,73 @@
 import React from "react";
-import { Row, Col, } from "antd";
+import { useState, useEffect } from "react";
+import axios from "axios";
+import { Row, Col } from "antd";
 import AIInsightCard from "./Cards/AIInsightCard";
 import GoalsCard from "./Cards/GoalsCard";
 import QuickWinsCard from "./Cards/QuickWinsCard";
 
 import data from "../../../../response/response2.json";
 import data2 from "../../../../response/response4.json";
-import "../styles/Card.css"
+import "../styles/Card.css";
 
 const MyDayCards = () => {
+  const [quickWinsData, setQuickWinsData] = useState(null);
+  const [goalsData, setGoalsData] = useState(null);
 
+  const quickWinsUrl = import.meta.env.VITE_QUICK_WINS_URL;
+  const goalsApiUrl = import.meta.env.VITE_GOALS_API_URL;
+  const authToken = import.meta.env.VITE_AUTH_TOKEN;
+
+  // Fetch Quick Wins Data
+  useEffect(() => {
+    const fetchQuickWins = async () => {
+      try {
+        const response = await axios.get(quickWinsUrl, {
+          headers: {
+            Accept: "application/json, text/plain, */*",
+            Authorization: `Bearer ${authToken}`,
+          },
+        });
+        setQuickWinsData(response.data);
+        console.log(response.data);
+      } catch (error) {
+        console.error("Error fetching Quick Wins data:", error);
+      }
+    };
+
+    fetchQuickWins();
+  }, [quickWinsUrl, authToken]);
+
+  // Fetch Goals Data
+  useEffect(() => {
+    const fetchGoals = async () => {
+      try {
+        const response = await axios.post(
+          goalsApiUrl,
+          {
+            organization_id: "447",
+            sort_by: "",
+            sort_type: "",
+            display_all: true,
+            page_size: 3,
+          },
+          {
+            headers: {
+              Accept: "application/json, text/plain, */*",
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${authToken}`,
+            },
+          }
+        );
+        setGoalsData(response.data);
+        console.log(response.data);
+      } catch (error) {
+        console.error("Error fetching Goals data:", error);
+      }
+    };
+
+    fetchGoals();
+  }, [goalsApiUrl, authToken]);
 
   return (
     <Row
@@ -20,16 +78,18 @@ const MyDayCards = () => {
       }}
       justify="center"
       align="center"
-      
     >
       <Col xs={24} sm={24} md={22} lg={8} xl={8}>
-        <AIInsightCard cardData={data.data.ai_message_data} />
+        <AIInsightCard cardData={quickWinsData?.data?.ai_message_data} />
+        {/* <AIInsightCard cardData={data2?.data?.ai_message_data} /> */}
       </Col>
       <Col xs={24} sm={24} md={22} lg={8} xl={8}>
-        <GoalsCard cardData={data2.data} />
+        <GoalsCard cardData={goalsData?.data} />
+        {/* <GoalsCard cardData={data?.data} /> */}
       </Col>
       <Col xs={24} sm={24} md={22} lg={8} xl={8}>
-        <QuickWinsCard cardData={data.data} />
+        <QuickWinsCard cardData={quickWinsData?.data} />
+        {/* <QuickWinsCard cardData={data2?.data} /> */}
       </Col>
     </Row>
   );

@@ -1,21 +1,13 @@
-// QuickWinsCard.jsx
 import React from "react";
 import PropTypes from "prop-types";
-import { Card, Button, Row, Col, } from "antd";
-import {
-  BulbOutlined,
-  FireFilled,
-  
-} from "@ant-design/icons";
+import { Card, Button, Row, Col } from "antd";
+import { BulbOutlined, FireFilled } from "@ant-design/icons";
 import Paragraph from "antd/es/typography/Paragraph";
 import CustomSlider from "../CustomSlider";
 
-const QuickWinsCard = ({ cardData }) => {
-  
+const QuickWinsCard = ({ cardData = { quick_wins_data: [], streak_count: 0 } }) => {
+  const tasks = cardData.quick_wins_data;
 
-  const tasks = cardData?.quick_wins_data;
-
- 
   return (
     <Card className="myday-card">
       <Row justify="space-between" align="center">
@@ -27,7 +19,7 @@ const QuickWinsCard = ({ cardData }) => {
         </Paragraph>
         <Paragraph className="f-sfpro">
           <FireFilled style={{ color: " #FAAD14", margin: "0" }} />
-          {cardData?.streak_count}d Streak
+          {cardData.streak_count}d Streak
         </Paragraph>
       </Row>
 
@@ -35,7 +27,7 @@ const QuickWinsCard = ({ cardData }) => {
         <CustomSlider slides={tasks} />
       </Row>
 
-      <Row align="center" justify='space-around' style={{marginTop: "1rem"}}>
+      <Row align="center" justify="space-around" style={{ marginTop: "1rem" }}>
         <Col span={19}>
           <Button
             type="default"
@@ -72,9 +64,15 @@ const QuickWinsCard = ({ cardData }) => {
 
 QuickWinsCard.propTypes = {
   cardData: PropTypes.shape({
-    quick_wins_data: PropTypes.arrayOf(PropTypes.object), // Assuming each task is an object
-    streak_count: PropTypes.number, // Assuming streak_count is a number
-  }).isRequired,
+    quick_wins_data: PropTypes.arrayOf(
+      PropTypes.shape({
+        id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]), // Task ID
+        title: PropTypes.string, // Task title
+        description: PropTypes.string, // Task description
+      })
+    ),
+    streak_count: PropTypes.number, // Streak count
+  }),
 };
 
 export default QuickWinsCard;

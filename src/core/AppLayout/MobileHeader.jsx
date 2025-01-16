@@ -22,16 +22,26 @@ const MobileHeader = ({ toggleSidebar }) => (
   >
 
 
-    <div
-      style={{
-        backgroundImage: `url(${logo})`,
-        display: "inline-block",
-        height: "2rem",
-        width: "8rem",
-        backgroundSize:"cover",
-        backgroundRepeat: "no-repeat",
-      }}
-    ></div>
+<Button icon={<MenuOutlined />} type="text" onClick={toggleSidebar} />
+
+<div
+  style={{
+    backgroundImage: `url(${logo})`,
+    display: "inline-block",
+    height: "2rem",
+    width: "8rem",
+    backgroundRepeat: "no-repeat",
+  }}
+></div>
+
+<Avatar
+  size={35}
+  icon={<UserOutlined />}
+  style={{ backgroundColor: "gray", cursor: "pointer" }}
+/>
+
+
+
   </Flex>
 );
 

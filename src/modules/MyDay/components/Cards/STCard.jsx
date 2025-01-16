@@ -168,7 +168,7 @@ STCard.propTypes = {
       due_in: PropTypes.string,
       task_success: PropTypes.string,
     })
-  ).isRequired,
+  ),
 };
 
 export default STCard;

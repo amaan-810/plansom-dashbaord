@@ -24,7 +24,7 @@ import "../../styles/tableCard.css";
 import Text from "antd/es/typography/Text";
 
 import rightArrow from "../../../../assets/images/rightArrow.svg";
-const MyDayTable = () => {
+const ScheduledTaskTable = ({tableData}) => {
  
 
   const formatEffort = (effort) => {
@@ -160,7 +160,7 @@ const MyDayTable = () => {
     },
   ];
 
-  const dataSource = jsonData.data.task_list.map((task) => ({
+  const dataSource = tableData?.data?.task_list.map((task) => ({
     key: task.id, // Unique key
     task: task.name,
     goal: {
@@ -234,4 +234,4 @@ const MyDayTable = () => {
   );
 };
 
-export default MyDayTable;
+export default ScheduledTaskTable;
