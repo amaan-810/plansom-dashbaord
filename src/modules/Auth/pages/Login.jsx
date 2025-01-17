@@ -1,5 +1,16 @@
 import React, { useState } from "react";
-import { Form, Input, Button, Checkbox, Typography, Row, Col } from "antd";
+import axios from "axios";
+import {
+  Form,
+  Input,
+  Button,
+  Checkbox,
+  Typography,
+  Row,
+  Col,
+  Modal,
+  Flex,
+} from "antd";
 import {
   ArrowLeftOutlined,
   EyeInvisibleOutlined,
@@ -8,16 +19,47 @@ import {
 import LoginLayout from "../LoginLayout";
 import "../styles/login.css";
 import useBreakpoint from "antd/lib/grid/hooks/useBreakpoint";
+import { useNavigate } from "react-router-dom";
+import Paragraph from "antd/es/typography/Paragraph";
+import { encryptData } from "../../../core/Utils/encryption";
 
 const { Text } = Typography;
 
 const Login = () => {
   const screens = useBreakpoint();
-  const [form] = Form.useForm(); // Create the form instance
-  const [isButtonDisabled, setIsButtonDisabled] = useState(true); // Button disabled state
+  const [form] = Form.useForm();
+  const [isButtonDisabled, setIsButtonDisabled] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const navigate = useNavigate();
 
-  const onFinish = (values) => {
-    console.log("Form Submitted:", values);
+  const loginUrl = import.meta.env.VITE_AUTH_LOGIN;
+
+  const onFinish = async (values) => {
+    setIsLoading(true);
+    setError(null);
+
+    try {
+      const response = await axios.post(loginUrl, JSON.stringify(values), {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      console.log(response.data);
+
+      const secretKey = import.meta.env.VITE_ENCRYPT_SECRET_KEY;
+
+      console.log("Secret Key:", secretKey);
+      const encryptedData = encryptData(response.data, secretKey);
+      sessionStorage.setItem("authData", encryptedData);
+
+      navigate("/myday");
+    } catch (err) {
+      console.error("Error logging in:", err);
+      setError(err?.response?.data?.message);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const onFinishFailed = (errorInfo) => {
@@ -34,6 +76,10 @@ const Login = () => {
       form.getFieldsValue(["email", "password"]).password;
 
     setIsButtonDisabled(hasErrors || !allFieldsFilled);
+  };
+
+  const handleModalClose = () => {
+    setError(null);
   };
 
   return (
@@ -70,15 +116,15 @@ const Login = () => {
 
             <Col span={24}>
               <Form
-                form={form} // Connect form instance directly here
+                form={form}
                 name="loginForm"
                 layout="vertical"
                 onFinish={onFinish}
                 onFinishFailed={onFinishFailed}
-                onFieldsChange={onFieldsChange} // Listen for field changes
-                requiredMark={false} // Disable the asterisk symbol for required fields
+                onFieldsChange={onFieldsChange}
+                requiredMark={false}
                 initialValues={{
-                  remember: false, // Set default value for the checkbox
+                  remember: false,
                 }}
               >
                 <Form.Item
@@ -124,10 +170,7 @@ const Login = () => {
                   </Button>
                 </Row>
 
-                <Form.Item
-                  name="remember"
-                  valuePropName="checked" // Handle checkbox value
-                >
+                <Form.Item name="remember" valuePropName="checked">
                   <Checkbox>Remember me</Checkbox>
                 </Form.Item>
 
@@ -144,11 +187,13 @@ const Login = () => {
                       borderColor: isButtonDisabled ? "gray" : "#1D3BAF",
                       cursor: isButtonDisabled ? "not-allowed" : "pointer",
                     }}
-                    disabled={isButtonDisabled} // Use dynamic state for disabling
+                    disabled={isButtonDisabled || isLoading} // Disable button when loading or has errors
+                    loading={isLoading} // Show loading spinner
                   >
                     Log In
                   </Button>
                 </Form.Item>
+
                 <Row align="middle">
                   <Text className="forget-password fw-600">
                     Not registered yet?
@@ -162,6 +207,46 @@ const Login = () => {
           </Row>
         </Col>
       </Row>
+
+      {/* Modal for error */}
+      {error && (
+        <Modal
+          // s
+          centered
+          open={true}
+          closable={false}
+          // footer={[
+          //   <Button key="close" onClick={handleModalClose}>
+          //     Close
+          //   </Button>,
+          // ]}
+          footer={null}
+        >
+          <Row justify="center">
+            <Paragraph
+              style={{ fontSize: "1.5rem" }}
+              className="fw-600 f-bricolage"
+            >
+              Oops
+            </Paragraph>
+          </Row>
+          <Row justify="center">
+            <Paragraph style={{ fontSize: "1.5rem", textAlign: "center" }}>
+              {error}
+            </Paragraph>
+          </Row>
+          <Row justify="center">
+            <Button
+              size="large"
+              type="primary"
+              key="close"
+              onClick={handleModalClose}
+            >
+              Ok
+            </Button>
+          </Row>
+        </Modal>
+      )}
     </LoginLayout>
   );
 };

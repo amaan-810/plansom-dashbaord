@@ -5,13 +5,17 @@ import { Row,Col } from 'antd'
 import ScheduledTaskTable from './Table/ScheduledTaskTable'
 import ScheduledTasksCard from './Table/ScheduledTasksCard'
 import useBreakpoint from 'antd/lib/grid/hooks/useBreakpoint'
+import getDecryptAuthData from '../../../core/Utils/encryption/getDecryptAuthData'
 
 const MyDayTable = () => {
 
   const [tableData, setTableData] = useState(null);
 
   const tableDataUrl=import.meta.env.VITE_MYDAY_TABLE_URL;
-  const authToken = import.meta.env.VITE_AUTH_TOKEN;
+  // const authToken = import.meta.env.VITE_AUTH_TOKEN;
+  const authData=getDecryptAuthData()
+  const authToken=authData?.data?.accessToken
+
 
   useEffect(() => {
     const fetchTaskList = async () => {
@@ -43,11 +47,12 @@ const MyDayTable = () => {
     <Row justify="center"style={{width:"100%"}}>
     {screens.lg ? (
       <Col span={24}>
-        <ScheduledTaskTable tableData={tableData}/>
+        {tableData!==null && <ScheduledTaskTable tableData={tableData}/>}
       </Col>
     ) : (
       <Col span={24} >
-        <ScheduledTasksCard tableData={tableData} />
+        { <ScheduledTasksCard tableData={tableData} />}
+        
       </Col>
     )}
   </Row>

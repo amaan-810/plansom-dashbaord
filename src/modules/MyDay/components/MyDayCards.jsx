@@ -9,6 +9,7 @@ import QuickWinsCard from "./Cards/QuickWinsCard";
 import data from "../../../../response/response2.json";
 import data2 from "../../../../response/response4.json";
 import "../styles/Card.css";
+import getDecryptAuthData from "../../../core/Utils/encryption/getDecryptAuthData";
 
 const MyDayCards = () => {
   const [quickWinsData, setQuickWinsData] = useState(null);
@@ -16,9 +17,16 @@ const MyDayCards = () => {
 
   const quickWinsUrl = import.meta.env.VITE_QUICK_WINS_URL;
   const goalsApiUrl = import.meta.env.VITE_GOALS_API_URL;
-  const authToken = import.meta.env.VITE_AUTH_TOKEN;
+  // const authToken = import.meta.env.VITE_AUTH_TOKEN;
 
-  // Fetch Quick Wins Data
+  const authData=getDecryptAuthData()
+
+  // console.log(authData)
+
+  const authToken=authData?.data?.accessToken;
+
+
+
   useEffect(() => {
     const fetchQuickWins = async () => {
       try {
@@ -29,7 +37,7 @@ const MyDayCards = () => {
           },
         });
         setQuickWinsData(response.data);
-        console.log(response.data);
+        // console.log(response.data);
       } catch (error) {
         console.error("Error fetching Quick Wins data:", error);
       }
@@ -60,7 +68,7 @@ const MyDayCards = () => {
           }
         );
         setGoalsData(response.data);
-        console.log(response.data);
+        // console.log(response.data);
       } catch (error) {
         console.error("Error fetching Goals data:", error);
       }
@@ -88,7 +96,8 @@ const MyDayCards = () => {
         {/* <GoalsCard cardData={data?.data} /> */}
       </Col>
       <Col xs={24} sm={24} md={22} lg={8} xl={8}>
-        <QuickWinsCard cardData={quickWinsData?.data} />
+      {quickWinsData?.data.quick_wins_data.lenght>0 && <QuickWinsCard cardData={quickWinsData?.data} />}
+        
         {/* <QuickWinsCard cardData={data2?.data} /> */}
       </Col>
     </Row>

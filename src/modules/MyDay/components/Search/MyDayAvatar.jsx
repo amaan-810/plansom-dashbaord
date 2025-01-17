@@ -2,8 +2,12 @@ import React from "react";
 import { UserOutlined, DownOutlined } from "@ant-design/icons";
 import { Flex, Avatar, Button } from "antd";
 import useBreakpoint from "antd/lib/grid/hooks/useBreakpoint";
+import getDecryptAuthData from "../../../../core/Utils/encryption/getDecryptAuthData";
 
 const MyDayAvatar = () => {
+
+  const authData=getDecryptAuthData();
+
   const screens = useBreakpoint();
   return (
     <Flex
@@ -31,7 +35,7 @@ const MyDayAvatar = () => {
           variant="text"
           size="large"
         >
-          Alexander
+          {authData?.data?.first_name}
         </Button>
       )}
     </Flex>
