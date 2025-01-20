@@ -1,75 +1,51 @@
-
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import {
   Table,
   Progress,
   Switch,
-  Dropdown,
   Button,
   Row,
   Col,
   Space,
   Card,
   Divider,
-  Flex,
   Select,
-  Checkbox,
   Tag,
+  Checkbox,
+  Dropdown,
+  Menu,
+  Flex,
 } from "antd";
 import {
-  DownOutlined,
-  EllipsisOutlined,
   FilterOutlined,
   FlagFilled,
   PlusOutlined,
   CloseOutlined,
+  DownOutlined,
+  EllipsisOutlined
 } from "@ant-design/icons";
 import "../../styles/tableCard.css";
 import Text from "antd/es/typography/Text";
+import {
+  formatEffort,
+  getFlagColor,
+  getStrokeColor,
+} from "../../config/tableUtility";
 import rightArrow from "../../../../assets/images/rightArrow.svg";
-import { formatEffort,getFlagColor,getStrokeColor } from "../../config/tableUtility";
-
-import axios from "axios";
-import getDecryptAuthData from "../../../../core/Utils/encryption/getDecryptAuthData";
+import useBreakpoint from "antd/lib/grid/hooks/useBreakpoint";
 
 const ScheduledTaskTable = ({ tableData }) => {
-  const authData=getDecryptAuthData()
-  const authToken=authData?.data?.accessToken
-  const filterUrl=import.meta.env.VITE_MYDAY_TABLE_FILTER_URL
+  const screens = useBreakpoint();
   const [isFilterRowVisible, setFilterRowVisible] = useState(false);
   const [selectedFilters, setSelectedFilters] = useState([]);
   const [filteredData, setFilteredData] = useState(tableData?.data?.task_list);
 
-  const applyFilters = async () => {
-    const queryParams = selectedFilters
-      .map((filter) => `${filter.key}=${filter.value}`)
-      .join("&");
+  const items = [
+    { key: "in-progress", label: "In progress" },
+    { key: "completed", label: "Completed" },
+    { key: "not-started", label: "Not started" },
+  ];
 
-    try {
-      const response = await axios.post(
-        `${filterUrl}${queryParams}`,{},
-        {
-          headers: {
-            Authorization: `Bearer ${authToken}`,
-          },
-        }
-      );
-      console.log(`${filterUrl}${queryParams}`)
-
-      setFilteredData(response?.data?.data?.task_list);
-      console.log(response.data)
-    } catch (error) {
-      console.error("Error fetching filtered data:", error);
-    }
-  };
-
-  // const handleFilterChange = (filterKey, value) => {
-  //   const newFilters = selectedFilters.filter((f) => f.key !== filterKey);
-  //   if (value) {
-  //     newFilters.push({ key: filterKey, value });
-  //   }
-  //   setSelectedFilters(newFilters);
-  // };
 
   const handleFilterChange = (filterKey, value, checked) => {
     let newFilters = [...selectedFilters];
@@ -83,28 +59,59 @@ const ScheduledTaskTable = ({ tableData }) => {
     }
 
     setSelectedFilters(newFilters);
-    console.log(newFilters)
-    applyFilters();
+    applyFilters(newFilters);
   };
 
   const clearAllFilters = () => {
     setSelectedFilters([]);
     setFilteredData(tableData?.data?.task_list);
-    setFilterRowVisible(false);
   };
 
-  const removeFilter = (filterKey) => {
-    const newFilters = selectedFilters.filter((f) => f.key !== filterKey);
-    setSelectedFilters(newFilters);
-    if (newFilters.length === 0) {
-      clearAllFilters();
-    } else {
-      applyFilters();
+  const applyFilters = (filters) => {
+    if (filters.length === 0) {
+      setFilteredData(tableData?.data?.task_list);
+      return;
     }
+
+    let filtered = tableData?.data?.task_list;
+
+    filters.forEach((filter) => {
+      filtered = filtered.filter((item) => {
+        if (filter.key === "status") {
+          return item.status === filter.value;
+        } else if (filter.key === "task_impact") {
+          return item.task_impact === filter.value;
+        }
+        return true;
+      });
+    });
+
+    setFilteredData(filtered);
   };
+
+  // const getMenu = (filterKey, options) => (
+  //   <Menu>
+  //     {options.map((option) => (
+  //       <Menu.Item key={option.value}>
+  //         <Checkbox
+  //           onChange={(e) =>
+  //             handleFilterChange(filterKey, option.value, e.target.checked)
+  //           }
+  //         >
+  //           {option.label}
+  //         </Checkbox>
+  //       </Menu.Item>
+  //     ))}
+  //   </Menu>
+  // );
 
   const columns = [
-    { title: "Task", dataIndex: "task", key: "task", sorter: (a, b) => a.task.localeCompare(b.task) },
+    {
+      title: "Task",
+      dataIndex: "task",
+      key: "task",
+      sorter: (a, b) => a.task.localeCompare(b.task),
+    },
     {
       title: "Goal",
       dataIndex: "goal",
@@ -145,8 +152,9 @@ const ScheduledTaskTable = ({ tableData }) => {
       dataIndex: "active",
       key: "active",
       sorter: (a, b) => Number(a.active) - Number(b.active),
-      render: (_, record) => {  return (<Switch checked={record?.active?.status==="Active"} />);},
-
+      render: (_, record) => (
+        <Switch checked={record.active.status === "Active"} />
+      ),
     },
     {
       title: "Impact",
@@ -174,22 +182,29 @@ const ScheduledTaskTable = ({ tableData }) => {
       key: "effort",
       sorter: (a, b) => {
         const totalMinutesA =
-          Math.floor(a.effort) * 60 + Math.round((a.effort - Math.floor(a.effort)) * 60);
+          Math.floor(a.effort) * 60 +
+          Math.round((a.effort - Math.floor(a.effort)) * 60);
         const totalMinutesB =
-          Math.floor(b.effort) * 60 + Math.round((b.effort - Math.floor(b.effort)) * 60);
+          Math.floor(b.effort) * 60 +
+          Math.round((b.effort - Math.floor(b.effort)) * 60);
         return totalMinutesA - totalMinutesB;
       },
       render: (effort) => formatEffort(effort),
     },
     { title: "Type", dataIndex: "type", key: "type"  ,  },
-    { title: "Due In", dataIndex: "dueIn", key: "dueIn", sorter: (a, b) => a.dueIn - b.dueIn },
+    {
+      title: "Due In",
+      dataIndex: "dueIn",
+      key: "dueIn",
+      sorter: (a, b) => a.dueIn - b.dueIn,
+    },
     {
       title: "Outcome",
       dataIndex: "outcome",
       key: "outcome",
       render: (outcome) => (
         <Flex>
-          <Dropdown menu={{ items: [] }} trigger={["click"]}>
+          <Dropdown menu={{items}} trigger={["click"]}>
             <Button
               icon={<DownOutlined />}
               iconPosition="end"
@@ -199,7 +214,11 @@ const ScheduledTaskTable = ({ tableData }) => {
               {outcome}
             </Button>
           </Dropdown>
-          <Button icon={<EllipsisOutlined />} iconPosition="start" type="text"></Button>
+          <Button
+            icon={<EllipsisOutlined />}
+            iconPosition="start"
+            type="text"
+          ></Button>
         </Flex>
       ),
     },
@@ -228,7 +247,10 @@ const ScheduledTaskTable = ({ tableData }) => {
   }));
 
   return (
-    <Card style={{ borderRadius: "1rem", marginBottom: "1rem" }} className="myday-tb-card">
+    <Card
+      style={{ borderRadius: "1rem", marginBottom: "1rem" }}
+      className="myday-tb-card"
+    >
       <Row justify="space-between" align="middle" style={{ margin: "2rem" }}>
         <Col>
           <Text className="f-bricolage fw-600" style={{ fontSize: "1.5rem" }}>
@@ -237,17 +259,7 @@ const ScheduledTaskTable = ({ tableData }) => {
         </Col>
         <Col>
           <Space>
-            {/* <Button
-              icon={<FilterOutlined />}
-              iconPosition="start"
-              shape="round"
-              size="large"
-              className="fw-600"
-              onClick={() => setFilterRowVisible(!isFilterRowVisible)}
-            >
-              Filter
-            </Button> */}
-             <Button
+            <Button
               icon={isFilterRowVisible ? <CloseOutlined /> : <FilterOutlined />}
               iconPosition={isFilterRowVisible ? "end" : "start"}
               shape="round"
@@ -263,6 +275,7 @@ const ScheduledTaskTable = ({ tableData }) => {
           </Space>
         </Col>
       </Row>
+
       {isFilterRowVisible && (
         <>
           <Divider style={{ margin: 0 }} />
@@ -469,48 +482,49 @@ const ScheduledTaskTable = ({ tableData }) => {
       )}
 
       {selectedFilters.length > 0 && !isFilterRowVisible && (
-              <>
-                <Divider style={{ margin: 0 }} />
-                <Row
-                  style={{ margin: "1rem 2rem" }}
-                  align="middle"
-                  justify="space-between"
+        <>
+          <Divider style={{ margin: 0 }} />
+          <Row
+            style={{ margin: "1rem 2rem" }}
+            align="middle"
+            justify="space-between"
+          >
+            <Col>
+              {selectedFilters.map((filter) => (
+                <Tag
+                  key={filter.value}
+                  closable
+                  onClose={() =>
+                    handleFilterChange(filter.key, filter.value, false)
+                  }
+                  style={{
+                    padding: "0.5rem",
+                    borderRadius: "1.5rem",
+                    backgroundColor: "#E8EBF7",
+                  }}
                 >
-                  <Col>
-                    {selectedFilters.map((filter) => (
-                      <Tag
-                        key={filter.value}
-                        closable
-                        onClose={() =>
-                          handleFilterChange(filter.key, filter.value, false)
-                        }
-                        style={{
-                          padding: "0.5rem",
-                          borderRadius: "1.5rem",
-                          backgroundColor: "#E8EBF7",
-                        }}
-                      >
-                        {`${filter.value} `}
-                      </Tag>
-                    ))}
-                  </Col>
-                  <Col>
-                    <Button
-                      type="default"
-                      variant="outlined"
-                      shape="round"
-                      onClick={clearAllFilters}
-                      icon={<CloseOutlined />}
-                      iconPosition="end"
-                    >
-                      Clear All Filters
-                    </Button>
-                  </Col>
-                </Row>
-      
-                <Divider style={{ margin: 0 }} />
-              </>
-            )}
+                  {`${filter.value} `}
+                </Tag>
+              ))}
+            </Col>
+            <Col>
+              <Button
+                type="default"
+                variant="outlined"
+                shape="round"
+                onClick={clearAllFilters}
+                icon={<CloseOutlined />}
+                iconPosition="end"
+              >
+                Clear All Filters
+              </Button>
+            </Col>
+          </Row>
+
+          <Divider style={{ margin: 0 }} />
+        </>
+      )}
+
       <Divider style={{ margin: 0 }} />
       <Row>
         <Table
@@ -522,6 +536,7 @@ const ScheduledTaskTable = ({ tableData }) => {
       </Row>
       <Divider style={{ margin: 0 }} />
       <Row style={{ margin: "2rem", textAlign: "center" }}>
+        {" "}
         <Button type="text" icon={<PlusOutlined />} className="fw-600">
           Add Task
         </Button>
@@ -531,4 +546,3 @@ const ScheduledTaskTable = ({ tableData }) => {
 };
 
 export default ScheduledTaskTable;
-
