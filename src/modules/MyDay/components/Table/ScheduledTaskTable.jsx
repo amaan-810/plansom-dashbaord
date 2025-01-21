@@ -113,11 +113,6 @@ const ScheduledTaskTable = ({ tableData }) => {
         />
       </Row>
       <Divider style={{ margin: 0 }} />
-      {/* <Row style={{ margin: "2rem", textAlign: "center" }}>
-        <Button type="text" icon={<PlusOutlined />} className="fw-600">
-          Add Task
-        </Button>
-      </Row> */}
 
       <AddTaskForm/>
     </Card>

@@ -208,7 +208,7 @@ const FilterRow = ({
                   Clear
                 </Text>
                 <Text>
-                  <CloseOutlined />
+                  <CloseOutlined  style={{color:"red"}}/>
                 </Text>
               </Flex>
             </Button>

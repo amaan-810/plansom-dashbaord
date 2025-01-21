@@ -41,6 +41,7 @@ const SelectedFiltersRow = ({
             onClick={clearAllFilters}
             icon={<CloseOutlined />}
             iconPosition="end"
+            style={{color:"red"}}
           >
             Clear All Filters
           </Button>

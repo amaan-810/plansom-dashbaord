@@ -20,7 +20,7 @@ const AddTaskForm = () => {
   const createTaskUrl = import.meta.env.VITE_MYDAY_TABLE_ADD_TASK_URL;
 
   const [selectedGoal, setSelectedGoal] = useState(null);
-  const [selectedImpact, setSelectedImpact] = useState("Medium");
+  const [selectedImpact, setSelectedImpact] = useState("medium");
   const [selectedHour, setSelectedHour] = useState(0);
   const [selectedMinutes, setSelectedMinutes] = useState(0);
   const [goals, setGoals] = useState([]);
@@ -61,8 +61,21 @@ const AddTaskForm = () => {
     try {
       const { taskName, goalId, impact, hours, minutes } = values;
       const effort = parseFloat(hours) + parseFloat(minutes) / 60;
-      const effortInInt = Math.round(effort); // Convert effort to hours
+      // Convert effort to hours
       console.log(taskName, goalId, impact, effort);
+      console.log({
+        organization_id: authData?.data?.default_organization,
+        task_creator: authData?.data?.id,
+        task_owner: authData?.data?.id,
+        name: taskName,
+        task_impact: impact,
+        task_effort: effort,
+        task_control: "medium",
+        status: "Active",
+        goal: goalId,
+        attachments: "",
+      });
+
       const response = await axios.post(
         createTaskUrl,
         {
@@ -71,7 +84,7 @@ const AddTaskForm = () => {
           task_owner: authData?.data?.id,
           name: taskName,
           task_impact: impact,
-          task_effort: effortInInt,
+          task_effort: effort,
           task_control: "medium",
           status: "Active",
           goal: goalId,
@@ -86,9 +99,10 @@ const AddTaskForm = () => {
       );
 
       message.success("Task added successfully!");
-      //onTaskAdded(response.data.data.task); // Pass the newly created task
       form.resetFields(); // Clear the form after submission
+      setAddTaskVisible(false)
     } catch (error) {
+
       console.error("Error adding task:", error);
       message.error("Failed to add task.");
     }
@@ -110,7 +124,7 @@ const AddTaskForm = () => {
       ) : (
         <Row style={{ margin: "2rem 1rem" }} justify="space-between">
           <Col span={24}>
-            <Form form={form} onFinish={handleAddTask} layout="inline" >
+            <Form form={form} onFinish={handleAddTask} layout="inline">
               <Row style={{ width: "100%" }} justify="space-around">
                 <Col span={5}>
                   <Form.Item
@@ -119,7 +133,10 @@ const AddTaskForm = () => {
                       { required: true, message: "Please enter the task name" },
                     ]}
                   >
-                    <Input placeholder="Task Name"  style={{borderRadius:"1rem"}}  />
+                    <Input
+                      placeholder="Task Name"
+                      style={{ borderRadius: "1rem" }}
+                    />
                   </Form.Item>
                 </Col>
                 <Col span={5}>
@@ -161,7 +178,7 @@ const AddTaskForm = () => {
                 <Col span={4}>
                   <Form.Item
                     name="impact"
-                    initialValue="Medium" 
+                    initialValue="medium"
                     rules={[
                       {
                         required: true,
@@ -171,7 +188,6 @@ const AddTaskForm = () => {
                   >
                     <Select
                       style={{ width: "100%" }}
-                      
                       placeholder="Select Impact"
                       value={selectedImpact}
                       onChange={setSelectedImpact}
@@ -183,17 +199,32 @@ const AddTaskForm = () => {
                           .includes(input.toLowerCase())
                       }
                     >
-                      <Option value="High">High</Option>
-                      <Option value="Medium">Medium</Option>
-                      <Option value="Low">Low</Option>
+                      <Option value="high">High</Option>
+                      <Option value="medium">Medium</Option>
+                      <Option value="low">Low</Option>
                     </Select>
                   </Form.Item>
                 </Col>
                 <Col span={3}>
                   <Form.Item
                     name="hours"
-                    initialValue="0 hours" 
-                    rules={[{ required: true, message: "Please select hours" }]}
+                    initialValue={0}
+                    rules={[
+                      { required: true, message: "Please select hours" },
+                      ({ getFieldValue }) => ({
+                        validator(_, value) {
+                          const minutes = getFieldValue("minutes");
+                          if (value === 0 && minutes === 0) {
+                            return Promise.reject(
+                              new Error(
+                                "Task Effort is Required"
+                              )
+                            );
+                          }
+                          return Promise.resolve();
+                        },
+                      }),
+                    ]}
                   >
                     <Select
                       style={{ width: "100%" }}
@@ -203,7 +234,6 @@ const AddTaskForm = () => {
                       showSearch
                       optionFilterProp="children"
                       filterOption={(input, option) => {
-                        // Extract the text content of the Option (which is the hour)
                         const children = React.Children.toArray(
                           option.children
                         ).join("");
@@ -223,20 +253,32 @@ const AddTaskForm = () => {
                 <Col span={3}>
                   <Form.Item
                     name="minutes"
-                    initialValue="0 mins" 
+                    initialValue={0}
                     rules={[
                       { required: true, message: "Please select minutes" },
+                      ({ getFieldValue }) => ({
+                        validator(_, value) {
+                          const hours = getFieldValue("hours");
+                          if (value === 0 && hours === 0) {
+                            return Promise.reject(
+                              new Error(
+                                "Task Effort is Required"
+                              )
+                            );
+                          }
+                          return Promise.resolve();
+                        },
+                      }),
                     ]}
                   >
                     <Select
-                      style={{ width: "100%" ,borderRadius: "1rem"}}
+                      style={{ width: "100%", borderRadius: "1rem" }}
                       placeholder="Select Minutes"
                       value={selectedMinutes}
                       onChange={setSelectedMinutes}
                       showSearch
                       optionFilterProp="children"
                       filterOption={(input, option) => {
-                        // Extract the text content of the Option (which is the hour)
                         const children = React.Children.toArray(
                           option.children
                         ).join("");
@@ -257,7 +299,11 @@ const AddTaskForm = () => {
                   <Button
                     type="default"
                     htmlType="submit"
-                    style={{ width: "100%" ,color:"white", backgroundColor:"#1D3BAF"}}
+                    style={{
+                      width: "100%",
+                      color: "white",
+                      backgroundColor: "#1D3BAF",
+                    }}
                     shape="round"
                   >
                     Add
@@ -268,7 +314,7 @@ const AddTaskForm = () => {
                     type="text"
                     icon={<CloseOutlined />}
                     onClick={() => setAddTaskVisible(false)}
-                    style={{ width: "100%",color:"red" }}
+                    style={{ width: "100%", color: "red" }}
                   />
                 </Col>
               </Row>
