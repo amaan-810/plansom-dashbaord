@@ -6,8 +6,8 @@ import { Content } from "antd/es/layout/layout";
 
 import { Row, Col, Flex } from "antd";
 
-import SearchBar from "../components/Search/SearchBar";
-import MyDayAvatar from "../components/Search/MyDayAvatar";
+import SearchBar from "../components/search/SearchBar";
+import MyDayAvatar from "../components/search/MyDayAvatar";
 import MyDayCards from "../components/MyDayCards";
 import MyDayTable from "../components/MyDayTable";
 

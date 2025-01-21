@@ -10,11 +10,11 @@ import "../../styles/tableCard.css";
 
 import axios from "axios";
 import getDecryptAuthData from "../../../../core/Utils/encryption/getDecryptAuthData";
-import TableHeader from "./SchedueldTaskTable/TableHeader";
-import FilterRow from "./SchedueldTaskTable/FilterRow";
-import SelectedFiltersRow from "./SchedueldTaskTable/SelectedFiltersRow";
-import TaskTable from "./SchedueldTaskTable/TaskTable";
-import AddTaskForm from "./SchedueldTaskTable/AddTaskForm";
+import TableHeader from "./schedueldTaskTable/TableHeader";
+import FilterRow from "./schedueldTaskTable/FilterRow";
+import SelectedFiltersRow from "./schedueldTaskTable/SelectedFiltersRow";
+import TaskTable from "./schedueldTaskTable/TaskTable";
+import AddTaskForm from "./schedueldTaskTable/AddTaskForm";
 
 const ScheduledTaskTable = ({ tableData }) => {
   const authData = getDecryptAuthData();

@@ -2,13 +2,13 @@ import React from "react";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { Row, Col } from "antd";
-import AIInsightCard from "./Cards/AIInsightCard";
-import GoalsCard from "./Cards/GoalsCard";
-import QuickWinsCard from "./Cards/QuickWinsCard";
+import AIInsightCard from "./cards/AIInsightCard";
+import GoalsCard from "./cards/GoalsCard";
+import QuickWinsCard from "./cards/QuickWinsCard";
 
 import data from "../../../../response/response2.json";
 import data2 from "../../../../response/response4.json";
-import "../styles/Card.css";
+import "../styles/card.css";
 import getDecryptAuthData from "../../../core/Utils/encryption/getDecryptAuthData";
 
 const MyDayCards = () => {
