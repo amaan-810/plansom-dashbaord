@@ -32,7 +32,7 @@ const MyDayTable = () => {
           }
         );
         setTableData(response.data);
-        console.log("Task List Data:", response.data);
+        // console.log("Task List Data:", response.data);
       } catch (error) {
         console.error("Error fetching task list:", error);
       }

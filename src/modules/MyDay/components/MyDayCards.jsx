@@ -17,15 +17,11 @@ const MyDayCards = () => {
 
   const quickWinsUrl = import.meta.env.VITE_QUICK_WINS_URL;
   const goalsApiUrl = import.meta.env.VITE_GOALS_API_URL;
-  // const authToken = import.meta.env.VITE_AUTH_TOKEN;
 
-  const authData=getDecryptAuthData()
+ 
+  const authData = getDecryptAuthData();
 
-  // console.log(authData)
-
-  const authToken=authData?.data?.accessToken;
-
-
+  const authToken = authData?.data?.accessToken;
 
   useEffect(() => {
     const fetchQuickWins = async () => {
@@ -37,6 +33,11 @@ const MyDayCards = () => {
           },
         });
         setQuickWinsData(response.data);
+        const quickWinsArray = Array.isArray(quickWinsData?.data?.quick_wins_data)
+        ? quickWinsData.data.quick_wins_data
+        : [];
+      // console.log(quickWinsArray.length);
+    
         // console.log(response.data);
       } catch (error) {
         console.error("Error fetching Quick Wins data:", error);
@@ -89,16 +90,17 @@ const MyDayCards = () => {
     >
       <Col xs={24} sm={24} md={22} lg={8} xl={8}>
         <AIInsightCard cardData={quickWinsData?.data?.ai_message_data} />
-        {/* <AIInsightCard cardData={data2?.data?.ai_message_data} /> */}
+        
       </Col>
       <Col xs={24} sm={24} md={22} lg={8} xl={8}>
         <GoalsCard cardData={goalsData?.data} />
-        {/* <GoalsCard cardData={data?.data} /> */}
+       
       </Col>
       <Col xs={24} sm={24} md={22} lg={8} xl={8}>
-      {quickWinsData?.data.quick_wins_data.lenght>0 && <QuickWinsCard cardData={quickWinsData?.data} />}
-        
-        {/* <QuickWinsCard cardData={data2?.data} /> */}
+        {quickWinsData?.data?.quick_wins_data?.length > 0 && (
+          <QuickWinsCard cardData={quickWinsData?.data} />
+        )}
+
       </Col>
     </Row>
   );
