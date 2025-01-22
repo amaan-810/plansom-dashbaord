@@ -2,8 +2,8 @@ import React from 'react'
 import { useState,useEffect } from 'react'
 import axios from 'axios'
 import { Row,Col } from 'antd'
-import ScheduledTaskTable from './Table/ScheduledTaskTable'
-import ScheduledTasksCard from './Table/ScheduledTasksCard'
+import ScheduledTaskTable from './table/ScheduledTaskTable'
+import ScheduledTasksCard from './table/ScheduledTasksCard'
 import useBreakpoint from 'antd/lib/grid/hooks/useBreakpoint'
 import getDecryptAuthData from '../../../core/Utils/encryption/getDecryptAuthData'
 
@@ -12,7 +12,6 @@ const MyDayTable = () => {
   const [tableData, setTableData] = useState(null);
 
   const tableDataUrl=import.meta.env.VITE_MYDAY_TABLE_URL;
-  // const authToken = import.meta.env.VITE_AUTH_TOKEN;
   const authData=getDecryptAuthData()
   const authToken=authData?.data?.accessToken
 
@@ -32,7 +31,7 @@ const MyDayTable = () => {
           }
         );
         setTableData(response.data);
-        // console.log("Task List Data:", response.data);
+       
       } catch (error) {
         console.error("Error fetching task list:", error);
       }

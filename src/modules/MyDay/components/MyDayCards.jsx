@@ -36,9 +36,6 @@ const MyDayCards = () => {
         const quickWinsArray = Array.isArray(quickWinsData?.data?.quick_wins_data)
         ? quickWinsData.data.quick_wins_data
         : [];
-      // console.log(quickWinsArray.length);
-    
-        // console.log(response.data);
       } catch (error) {
         console.error("Error fetching Quick Wins data:", error);
       }

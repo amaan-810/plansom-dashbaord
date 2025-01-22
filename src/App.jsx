@@ -4,6 +4,7 @@ import Login from "./modules/Auth/pages/Login";
 import "./assets/styles/common.css";
 import "./assets/styles/text.css";
 import { HOME, LOGIN, SIGNUP, MYDAY, PROFILE } from "./core/config/constants/routesConstants.js";
+import AboutUs from "./modules/AboutUs/pages/";
 
 function App() {
   return (
@@ -11,6 +12,7 @@ function App() {
     <Routes>
       <Route path={MYDAY} element={<MyDay />} />
       <Route path={LOGIN} element={<Login />} />
+      <Route path="/aboutus" element={<AboutUs />} />
     </Routes>
   </BrowserRouter>
   );
