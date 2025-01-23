@@ -3,7 +3,6 @@ import { Layout, Button, Row, Col, Image, Flex } from "antd";
 import { MenuOutlined } from "@ant-design/icons";
 import logo from "../assets/logo.svg";
 import useBreakpoint from "antd/lib/grid/hooks/useBreakpoint";
-const { Header, Content } = Layout;
 
 const AboutUsHeader = () => {
   const screens = useBreakpoint();
@@ -21,7 +20,7 @@ const AboutUsHeader = () => {
         zIndex: 1000,
         minHeight: "5rem",
         backgroundColor: "#E8EBF7",
-        // border: "1px solid red"
+       
       }}
     >
       <Row justify="space-between" align="middle" style={{ width: "100%" }}>
@@ -59,7 +58,7 @@ const AboutUsHeader = () => {
 
         <Col xs={4} sm={4} md={0} lg={0}>
           <Flex align="middle" justify="center">
-            <Button type="text" icon={<MenuOutlined />} />
+            <Button shape="circle" type="default" size="large" icon={<MenuOutlined />} style={{backgroundColor:"#DDDEE4"}} />
           </Flex>
         </Col>
       </Row>

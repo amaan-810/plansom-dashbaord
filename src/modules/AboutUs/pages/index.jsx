@@ -1,5 +1,5 @@
 import React from "react";
-import { Row,Col, Layout } from "antd";
+import { Row, Col, Layout } from "antd";
 import AboutUsHeader from "../components/AboutUsHeader";
 import AboutUsContent from "../components/AboutUsContent";
 
@@ -7,19 +7,17 @@ const AboutUs = () => {
   return (
     <Layout
       style={{
-        // height: "100vh",
         width: "100vw",
-        height:"100%",
-        // backgroundColor: "#E8EBF7",
-        position: "fixed"
+        height: "100%",
+        position: "fixed",
       }}
     >
-      <Row >
+      <Row>
         <Col span={24}>
-      <AboutUsHeader />
+          <AboutUsHeader />
 
-      <AboutUsContent />
-      </Col>
+          <AboutUsContent />
+        </Col>
       </Row>
     </Layout>
   );
