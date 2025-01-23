@@ -370,9 +370,9 @@ function AboutUsPage({}) {
          gap: "24px"
        }}
      >
-       <Row style={{ display: "flex", justifyContent: "center" }}>
+       <Row style={{ display: "flex", justifyContent: "center" ,}}>
          {" "}
-         <Title>
+         <Title style={{textAlign:"center"}}>
            <span
              style={{ fontFamily: "Bricolage Grotesque", color: "#05060E" }}
            >
