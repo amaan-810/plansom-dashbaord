@@ -13,9 +13,9 @@ const AboutUsHeader = () => {
         position: "fixed",
         padding: !screens.lg
           ? !screens.md
-            ? "2rem 1rem"
-            : " 2rem 2rem "
-          : "2rem 6.25rem",
+            ? "1rem 1rem"
+            : " 1rem 2rem "
+          : "1rem 6.25rem",
         width: "100%",
         zIndex: 1000,
         minHeight: "5rem",
